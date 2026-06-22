@@ -1,0 +1,302 @@
+const uv3Questions = [
+  {
+    question: "Est-il nécessaire de connaître son cadre légal afin de résoudre un conflit ?",
+    options: ["Non, le cadre légal sert uniquement en cas de légitime défense", "Oui, le cadre légal permet de rappeler aux personnes les règles établies", "Oui, car l'agent de prévention et de sécurité a plus de prérogatives qu'un citoyen", "Non, le cadre légal ne concerne que les agents de prévention et de sécurité", "Aucune des autres réponses"],
+    correctText: "Oui, le cadre légal permet de rappeler aux personnes les règles établies",
+    tip: "La connaissance du cadre légal permet à l'agent de rappeler les règles applicables avec calme et légitimité."
+  },
+  {
+    question: "Quel est l'un des aspects positifs du conflit ?",
+    options: ["Dépense d'énergie émotive", "Dépense de temps", "Perception négative envers l'autre", "Stimulation d'énergie", "Aucune des autres réponses"],
+    correctText: "Stimulation d'énergie",
+    tip: "Un conflit bien géré peut mobiliser les personnes et stimuler une énergie utile au changement."
+  },
+  {
+    question: "Quelle est l'attitude adaptée pour résoudre un conflit ?",
+    options: ["Critiquer - Écouter - Imposer - Inciter", "Interroger - Infirmer - Reformuler - Accepter", "Écouter - Reformuler - Interroger - Confirmer", "Imposer - Dialoguer - Interroger - Inciter", "Aucune des autres réponses"],
+    correctText: "Écouter - Reformuler - Interroger - Confirmer",
+    tip: "L'écoute, la reformulation et les questions permettent de vérifier les faits avant de confirmer une solution."
+  },
+  {
+    question: "Un de vos collègues APS est menacé de mort verbalement par un client qui s'en va. Que faites-vous ?",
+    options: ["Je poursuis le client, lui fais la morale et le somme de venir présenter ses excuses à mon collègue", "Je prends soin de bien noter avec mon collègue tous les éléments importants et factuels sur la main courante et je vais porter plainte", "Aucune des autres réponses", "Le client étant parti sans autre action, le dossier est clos", "Je vais remonter le moral de mon collègue pour qu'il banalise la situation"],
+    correctText: "Je prends soin de bien noter avec mon collègue tous les éléments importants et factuels sur la main courante et je vais porter plainte",
+    tip: "Une menace de mort doit être consignée précisément et peut justifier un dépôt de plainte."
+  },
+  {
+    question: "Lorsque l'agent observe des personnes en conflit dans son périmètre d'action, il doit :",
+    options: ["S'en mêler et prendre position", "Uniquement observer ce qui se passe", "Aucune des autres réponses", "Se poser en conciliateur", "Partir le plus vite possible"],
+    correctText: "Se poser en conciliateur",
+    tip: "L'agent reste neutre et cherche à apaiser les échanges sans prendre parti."
+  },
+  {
+    question: "Dans l'analyse des postures, à quoi correspond le corps en arrière ?",
+    options: ["Implication personnelle", "Aucune des autres réponses", "Découragement", "Désengagement", "Affirmation de soi"],
+    correctText: "Désengagement",
+    tip: "Une posture en retrait traduit généralement une prise de distance ou un désengagement."
+  },
+  {
+    question: "Une opposition d'idées où chaque personne exprime son hostilité pour l'obtention d'une même ressource s'appelle :",
+    options: ["Un conflit", "Un exposé", "Un parrainage", "Aucune des autres réponses", "Une interview"],
+    correctText: "Un conflit",
+    tip: "L'opposition hostile autour d'un objectif ou d'une ressource commune caractérise un conflit."
+  },
+  {
+    question: "À quoi doit-on faire attention lors d'un dialogue avec une personne agressive ?",
+    options: ["Toutes les réponses sont bonnes", "À ne pas l'énerver encore plus - Garder son calme - Articuler", "À l'intonation de la voix utilisée", "Au regard - À la voix - Aux gestes", "À l'intonation de la voix - Intensité de la voix - Articulation - Débit de parole"],
+    correctText: "Toutes les réponses sont bonnes",
+    tip: "Le regard, les gestes, le calme, l'intonation, l'intensité et le débit de parole influencent tous l'apaisement."
+  },
+  {
+    question: "Lorsqu'une personne vous irrite, quelle doit être votre façon de communiquer avec elle ?",
+    options: ["Aucune des autres réponses", "Utiliser un langage fort et direct", "Essayer de persuader cette personne d'arrêter", "Parler poliment et exprimer votre point de vue", "Ne rien dire et ne rien faire"],
+    correctText: "Parler poliment et exprimer votre point de vue",
+    tip: "Une communication polie, factuelle et assertive permet d'exprimer son désaccord sans aggraver la situation."
+  },
+  {
+    question: "Quel type de personne peut être plus générateur de conflit ?",
+    options: ["Aucune des autres réponses", "Une personne ne parlant pas le français", "Une personne timide", "Une personne insatisfaite", "Une personne bavarde"],
+    correctText: "Une personne insatisfaite",
+    tip: "L'insatisfaction non traitée peut nourrir les tensions et favoriser l'apparition d'un conflit."
+  },
+  {
+    question: "Quel type de personne peut être plus générateur de conflit ?",
+    options: ["Une personne ne parlant pas le français", "Une personne insatisfaite", "Aucune des autres réponses", "Une personne timide", "Une personne bavarde"],
+    correctText: "Une personne insatisfaite",
+    tip: "L'insatisfaction est un facteur fréquent de tension lorsqu'elle n'est pas entendue ou prise en compte."
+  },
+  {
+    question: "Un membre du personnel perd ses droits d'accès à l'établissement dans lequel il travaillait. L'agent en poste lui interdit donc l'accès. Le ton monte :",
+    options: ["L'agent reste ferme et diplomate, il lui propose de contacter directement son responsable", "L'agent le laisse rentrer juste pour prendre ses affaires et dire au revoir à ses collègues", "L'agent porte un jugement personnel sur sa situation et lui interdit l'accès", "Aucune des autres réponses", "L'agent le saisit et le conduit à l'extérieur du site"],
+    correctText: "L'agent reste ferme et diplomate, il lui propose de contacter directement son responsable",
+    tip: "L'agent applique la consigne d'accès sans jugement et oriente la personne vers l'interlocuteur compétent."
+  },
+  {
+    question: "Lorsqu'un avantage auquel on tient est menacé, on parle de :",
+    options: ["Conflit d'intérêt", "Conflit d'évaluation", "Conflit de loi", "Conflit de personnes", "Aucune des autres réponses"],
+    correctText: "Conflit d'intérêt",
+    tip: "Un conflit d'intérêt apparaît lorsque des intérêts ou avantages personnels sont menacés ou incompatibles."
+  },
+  {
+    question: "L'agent aperçoit un client jeter un paquet de biscuits à l'intérieur de la surface de vente après l'avoir mangé. L'agent le ramasse. Le client est pris sur le fait. Que doit faire l'agent ?",
+    options: ["L'agent le réprimande d'avoir mangé des biscuits non achetés et l'accuse de vol", "L'agent lui tend le paquet de biscuits pour qu'il le paye avec ses courses en caisse", "Aucune des autres réponses", "L'agent jette le paquet de biscuits à la poubelle", "L'agent menace le client d'interdiction de revenir"],
+    correctText: "L'agent lui tend le paquet de biscuits pour qu'il le paye avec ses courses en caisse",
+    tip: "L'agent privilégie une résolution calme et proportionnée en invitant le client à régulariser la situation."
+  },
+  {
+    question: "Qu'est-ce qu'un conflit ?",
+    options: ["Aucune des autres réponses", "Une situation qui va obligatoirement engendrer des coups", "Une situation où une des personnes a toujours tort", "Une situation où le plus fort a toujours raison", "Une situation problématique n'ayant pas abouti"],
+    correctText: "Une situation problématique n'ayant pas abouti",
+    tip: "Un conflit est une situation d'opposition non résolue ; il n'implique pas nécessairement de violence."
+  },
+  {
+    question: "Une opposition d'idées où chaque personne exprime son hostilité pour l'obtention d'une même ressource s'appelle :",
+    options: ["Un parrainage", "Un conflit", "Aucune des autres réponses", "Une interview", "Un exposé"],
+    correctText: "Un conflit",
+    tip: "L'opposition hostile autour d'une même ressource correspond à la définition d'un conflit."
+  },
+  {
+    question: "Dans une galerie marchande, deux jeunes enfants chahutent bruyamment, les parents ne sont pas présents :",
+    options: ["L'agent vient avec plusieurs collègues pour les appréhender", "Aucune des autres réponses", "L'agent leur demande de se calmer et fait appeler les parents au micro", "L'agent les sépare et les réprimande fermement", "S'agissant d'enfants, c'est courant et l'agent ne s'en préoccupe pas"],
+    correctText: "L'agent leur demande de se calmer et fait appeler les parents au micro",
+    tip: "L'intervention doit rester mesurée : calmer les enfants puis retrouver leurs responsables."
+  },
+  {
+    question: "L'agent aperçoit un client jeter un paquet de biscuits à l'intérieur de la surface de vente après l'avoir mangé. L'agent le ramasse. Le client est pris sur le fait. Que doit faire l'agent ?",
+    options: ["Aucune des autres réponses", "L'agent lui tend le paquet de biscuits pour qu'il le paye avec ses courses en caisse", "L'agent le réprimande d'avoir mangé des biscuits non achetés et l'accuse de vol", "L'agent jette le paquet de biscuits à la poubelle", "L'agent menace le client d'interdiction de revenir"],
+    correctText: "L'agent lui tend le paquet de biscuits pour qu'il le paye avec ses courses en caisse",
+    tip: "Une régularisation volontaire en caisse est la réponse la plus calme et la plus proportionnée."
+  },
+  {
+    question: "Quel type de personne peut être plus générateur de conflit ?",
+    options: ["Une personne timide", "Une personne insatisfaite", "Une personne bavarde", "Aucune des autres réponses", "Une personne ne parlant pas le français"],
+    correctText: "Une personne insatisfaite",
+    tip: "Une insatisfaction persistante peut devenir une source importante de conflit."
+  },
+  {
+    question: "Dans l'analyse des postures, à quoi correspond le corps en avant ?",
+    options: ["Désengagement", "Implication personnelle", "Découragement", "Aucune des autres réponses", "Affirmation de soi"],
+    correctText: "Implication personnelle",
+    tip: "Le corps penché vers l'avant traduit généralement l'implication dans l'échange."
+  },
+  {
+    question: "Vous êtes agent de sécurité dans un hôpital, une personne s'en prend verbalement à l'agent d'accueil des urgences. Que faites-vous ?",
+    options: ["Vous attendez que le conflit se résolve de lui-même", "Vous demandez à la personne de quitter l'hôpital afin de résoudre le conflit avec l'agent d'accueil", "Vous appelez les forces de l'ordre", "Aucune des autres réponses", "Vous demandez à l'agent d'accueil de sortir du champ visuel de l'agresseur afin de résoudre le conflit"],
+    correctText: "Vous demandez à l'agent d'accueil de sortir du champ visuel de l'agresseur afin de résoudre le conflit",
+    tip: "Éloigner temporairement la personne prise pour cible peut casser la dynamique d'agression et faciliter l'apaisement."
+  },
+  {
+    question: "Quelle est la première attitude à adopter pour résoudre un conflit ?",
+    options: ["Le dialogue constructif", "Aucune des autres réponses", "L'agressivité", "La fuite", "La confrontation physique"],
+    correctText: "Le dialogue constructif",
+    tip: "La résolution commence par un dialogue calme permettant d'identifier le problème et les attentes."
+  },
+  {
+    question: "Quelle est la première attitude à adopter pour résoudre un conflit ?",
+    options: ["L'agressivité", "La confrontation physique", "La fuite", "Le dialogue constructif", "Aucune des autres réponses"],
+    correctText: "Le dialogue constructif",
+    tip: "Le dialogue constructif est le premier outil d'apaisement avant toute autre mesure."
+  },
+  {
+    question: "Est-il nécessaire de connaître son cadre légal afin de résoudre un conflit ?",
+    options: ["Non, le cadre légal ne concerne que les agents de prévention et de sécurité", "Aucune des autres réponses", "Non, le cadre légal sert uniquement en cas de légitime défense", "Oui, car l'agent de prévention et de sécurité a plus de prérogatives qu'un citoyen", "Oui, le cadre légal permet de rappeler aux personnes les règles établies"],
+    correctText: "Oui, le cadre légal permet de rappeler aux personnes les règles établies",
+    tip: "Le cadre légal donne à l'agent des repères pour expliquer et faire respecter les règles sans dépasser ses prérogatives."
+  },
+  {
+    question: "Quelles sont les 3 grandes phases à utiliser pour bien gérer un conflit, dites aussi piliers de la méthode Gordon ?",
+    options: ["Aucune des autres réponses", "Écoute passive - Affirmation - Alerter la police", "Écoute active - Affirmation de soi - Résolution du conflit sans perdant", "Écoute active - Affirmation - Dénonciation", "Écoute passive - Affirmation de ses propos - Résolution du conflit"],
+    correctText: "Écoute active - Affirmation de soi - Résolution du conflit sans perdant",
+    tip: "La méthode Gordon associe écoute active, affirmation de soi et recherche d'une solution sans perdant."
+  },
+  {
+    question: "Vous êtes en conflit avec une personne. Lors de vos échanges, vous devez :",
+    options: ["Aucune des autres réponses", "Écouter passivement, acquiescer et vous excuser", "Essayer de vous imposer par votre discours", "Parler un peu plus de la situation que de l'écouter", "Écouter attentivement et réagir aux mots et aux sentiments"],
+    correctText: "Écouter attentivement et réagir aux mots et aux sentiments",
+    tip: "L'écoute active tient compte à la fois des faits exprimés et des émotions de l'interlocuteur."
+  },
+  {
+    question: "Lors d'un conflit, que ne faut-il absolument pas faire ?",
+    options: ["Écouter et interroger", "Dialoguer et comprendre l'origine du conflit", "Mettre en garde et imposer une solution", "Reformuler et confirmer", "Aucune des autres réponses"],
+    correctText: "Mettre en garde et imposer une solution",
+    tip: "Une solution imposée augmente la résistance ; il faut favoriser le dialogue et la recherche d'un accord."
+  },
+  {
+    question: "Dans une galerie marchande, deux jeunes enfants chahutent bruyamment, les parents ne sont pas présents :",
+    options: ["L'agent leur demande de se calmer et fait appeler les parents au micro", "L'agent les sépare et les réprimande fermement", "L'agent vient avec plusieurs collègues pour les appréhender", "S'agissant d'enfants, c'est courant et l'agent ne s'en préoccupe pas", "Aucune des autres réponses"],
+    correctText: "L'agent leur demande de se calmer et fait appeler les parents au micro",
+    tip: "L'agent intervient avec mesure, rassure les enfants et cherche rapidement leurs parents."
+  },
+  {
+    question: "Qu'est-ce qu'un conflit ?",
+    options: ["Une situation problématique n'ayant pas abouti", "Une situation où une des personnes a toujours tort", "Une situation où le plus fort a toujours raison", "Une situation qui va obligatoirement engendrer des coups", "Aucune des autres réponses"],
+    correctText: "Une situation problématique n'ayant pas abouti",
+    tip: "Le conflit résulte d'une opposition non résolue, sans qu'une personne soit forcément totalement fautive."
+  },
+  {
+    question: "Quelle est l'attitude adaptée pour résoudre un conflit ?",
+    options: ["Aucune des autres réponses", "Interroger - Infirmer - Reformuler - Accepter", "Écouter - Reformuler - Interroger - Confirmer", "Imposer - Dialoguer - Interroger - Inciter", "Critiquer - Écouter - Imposer - Inciter"],
+    correctText: "Écouter - Reformuler - Interroger - Confirmer",
+    tip: "Cette succession permet de comprendre, vérifier puis valider les éléments de l'échange."
+  },
+  {
+    question: "Lorsqu'un avantage auquel on tient est menacé, on parle de :",
+    options: ["Conflit d'intérêt", "Conflit de loi", "Conflit de personnes", "Aucune des autres réponses", "Conflit d'évaluation"],
+    correctText: "Conflit d'intérêt",
+    tip: "La menace sur un avantage personnel ou collectif relève d'un conflit d'intérêt."
+  },
+  {
+    question: "Quels sont les principes pour faire face à une agression verbale ?",
+    options: ["Garder son calme - Ne pas interrompre l'interlocuteur", "Aucune des autres réponses", "Dire à l'interlocuteur de patienter - L'ignorer", "Écouter attentivement - Ne pas le faire répéter en cas d'incompréhension", "Donner des réponses claires et précises - Couper court à la conversation"],
+    correctText: "Garder son calme - Ne pas interrompre l'interlocuteur",
+    tip: "Le calme et l'écoute réduisent la tension et permettent à la personne d'exprimer son mécontentement."
+  },
+  {
+    question: "Une opposition d'idées où chaque personne exprime son hostilité pour l'obtention d'une même ressource s'appelle :",
+    options: ["Une interview", "Aucune des autres réponses", "Un parrainage", "Un conflit", "Un exposé"],
+    correctText: "Un conflit",
+    tip: "Une opposition hostile pour une ressource commune constitue un conflit."
+  },
+  {
+    question: "Lorsque l'agent observe des personnes en conflit dans son périmètre d'action, il doit :",
+    options: ["S'en mêler et prendre position", "Aucune des autres réponses", "Uniquement observer ce qui se passe", "Partir le plus vite possible", "Se poser en conciliateur"],
+    correctText: "Se poser en conciliateur",
+    tip: "Le rôle de l'agent est d'apaiser avec neutralité, pas de choisir un camp."
+  },
+  {
+    question: "Les conflits factuels sont :",
+    options: ["Des conflits liés à un enjeu de pouvoir", "Des conflits liés à la défense de valeurs différentes", "Aucune des autres réponses", "Des conflits issus d'un fait qui donne lieu à une divergence", "Des conflits issus d'une impression"],
+    correctText: "Des conflits issus d'un fait qui donne lieu à une divergence",
+    tip: "Un conflit factuel naît d'un désaccord portant sur un fait précis ou sur son interprétation."
+  },
+  {
+    question: "Comment un agent de prévention et de sécurité peut-il prévenir un conflit ?",
+    options: ["En haussant le ton dès qu'un conflit débute", "Aucune des autres réponses", "En pratiquant un sport de combat", "En démontrant aux personnes qu'il est détenteur de l'autorité", "En ayant une attitude et un comportement exemplaires"],
+    correctText: "En ayant une attitude et un comportement exemplaires",
+    tip: "Une posture professionnelle, calme et respectueuse favorise la prévention des tensions."
+  },
+  {
+    question: "Quelles sont les 3 grandes phases à utiliser pour bien gérer un conflit, dites aussi piliers de la méthode Gordon ?",
+    options: ["Écoute active - Affirmation de soi - Résolution du conflit sans perdant", "Écoute passive - Affirmation - Alerter la police", "Écoute passive - Affirmation de ses propos - Résolution du conflit", "Aucune des autres réponses", "Écoute active - Affirmation - Dénonciation"],
+    correctText: "Écoute active - Affirmation de soi - Résolution du conflit sans perdant",
+    tip: "La méthode vise une solution acceptable pour chacun grâce à l'écoute et à l'assertivité."
+  },
+  {
+    question: "Une personne s'énerve parce que vous l'avez bousculée en partant pour une intervention de secours à personne. Que faites-vous ?",
+    options: ["Aucune des autres réponses", "Vous lui faites clairement comprendre que cela retarde votre intervention", "Vous vous excusez et repartez rapidement en intervention", "Vous l'ignorez car l'intervention est plus importante", "Vous prenez le temps de lui présenter vos excuses et vous lui en expliquez précisément la cause"],
+    correctText: "Vous vous excusez et repartez rapidement en intervention",
+    tip: "Une excuse brève apaise la personne sans retarder une intervention urgente."
+  },
+  {
+    question: "Deux de vos collègues, en poste avec vous, ne veulent plus se parler à cause d'un différend. Que faites-vous ?",
+    options: ["Vous les laissez se débrouiller, ce ne sont pas vos problèmes", "Aucune des autres réponses", "Vous demandez l'organisation d'une conciliation à votre responsable", "Vous prévenez immédiatement le client", "Vous ne faites rien, vous pouvez enfin travailler dans le calme"],
+    correctText: "Vous demandez l'organisation d'une conciliation à votre responsable",
+    tip: "Un conflit interne durable doit être signalé afin qu'une conciliation encadrée puisse être organisée."
+  },
+  {
+    question: "Lors d'un conflit, que ne faut-il absolument pas faire ?",
+    options: ["Reformuler et confirmer", "Écouter et interroger", "Mettre en garde et imposer une solution", "Dialoguer et comprendre l'origine du conflit", "Aucune des autres réponses"],
+    correctText: "Mettre en garde et imposer une solution",
+    tip: "L'imposition autoritaire d'une solution entretient souvent le conflit au lieu de le résoudre."
+  },
+  {
+    question: "Les conflits factuels sont :",
+    options: ["Des conflits issus d'une impression", "Des conflits issus d'un fait qui donne lieu à une divergence", "Aucune des autres réponses", "Des conflits liés à la défense de valeurs différentes", "Des conflits liés à un enjeu de pouvoir"],
+    correctText: "Des conflits issus d'un fait qui donne lieu à une divergence",
+    tip: "Le conflit factuel porte sur un événement ou un élément concret donnant lieu à un désaccord."
+  },
+  {
+    question: "Parmi les propositions suivantes, laquelle n'est pas un facteur déclenchant de l'agressivité ?",
+    options: ["L'excès d'estime de soi", "Aucune des autres réponses", "L'atteinte au territoire", "L'identité", "La bienveillance"],
+    correctText: "La bienveillance",
+    tip: "La bienveillance favorise l'apaisement ; elle n'est pas un déclencheur d'agressivité."
+  },
+  {
+    question: "Lorsqu'un conflit n'est pas clairement déclaré, il est :",
+    options: ["Ouvert", "Dégradé", "Aucune des autres réponses", "Préalable", "Latent"],
+    correctText: "Latent",
+    tip: "Un conflit latent existe sans être encore exprimé ouvertement."
+  },
+  {
+    question: "Une opposition d'idées où chaque personne exprime son hostilité pour l'obtention d'une même ressource s'appelle :",
+    options: ["Un exposé", "Un conflit", "Une interview", "Aucune des autres réponses", "Un parrainage"],
+    correctText: "Un conflit",
+    tip: "La concurrence hostile autour d'une même ressource correspond à un conflit."
+  },
+  {
+    question: "Dans l'analyse des postures, à quoi correspond le corps tassé ?",
+    options: ["Aucune des autres réponses", "Affirmation de soi", "Implication personnelle", "Découragement", "Désengagement"],
+    correctText: "Découragement",
+    tip: "Une posture tassée et refermée traduit souvent le découragement ou l'abattement."
+  },
+  {
+    question: "Qu'est-ce qu'un conflit ?",
+    options: ["Une situation qui va obligatoirement engendrer des coups", "Aucune des autres réponses", "Une situation où une des personnes a toujours tort", "Une situation où le plus fort a toujours raison", "Une situation problématique n'ayant pas abouti"],
+    correctText: "Une situation problématique n'ayant pas abouti",
+    tip: "Le conflit est une opposition non résolue, et non nécessairement une confrontation physique."
+  },
+  {
+    question: "Dans l'analyse des postures, à quoi correspond le corps en arrière ?",
+    options: ["Affirmation de soi", "Aucune des autres réponses", "Découragement", "Désengagement", "Implication personnelle"],
+    correctText: "Désengagement",
+    tip: "Le recul du corps est généralement associé à une prise de distance et au désengagement."
+  },
+  {
+    question: "À quoi doit-on faire attention lors d'un dialogue avec une personne agressive ?",
+    options: ["À l'intonation de la voix - Intensité de la voix - Articulation - Débit de parole", "Toutes les réponses sont bonnes", "À ne pas l'énerver encore plus - Garder son calme - Articuler", "À l'intonation de la voix utilisée", "Au regard - À la voix - Aux gestes"],
+    correctText: "Toutes les réponses sont bonnes",
+    tip: "Tous les éléments verbaux et non verbaux proposés participent à la désescalade."
+  },
+  {
+    question: "À l'entrée d'un centre commercial, un client vient se plaindre auprès de vous d'un article acheté, qu'il juge défectueux. Que faites-vous ?",
+    options: ["Aucune des autres réponses", "Vous lui indiquez que l'article ne peut être repris car il l'a déjà ouvert et utilisé", "Vous lui rappelez que vous n'êtes pas un vendeur", "Vous lui proposez vos services après votre vacation, car vous connaissez bien les défauts de cet article", "Vous prenez le temps de l'écouter et le dirigez vers le service après-vente"],
+    correctText: "Vous prenez le temps de l'écouter et le dirigez vers le service après-vente",
+    tip: "L'agent écoute la demande puis oriente le client vers le service compétent sans sortir de sa mission."
+  },
+  {
+    question: "Dans l'analyse des postures, à quoi correspond le corps en avant ?",
+    options: ["Désengagement", "Découragement", "Implication personnelle", "Aucune des autres réponses", "Affirmation de soi"],
+    correctText: "Implication personnelle",
+    tip: "Le corps en avant indique une implication active dans l'échange."
+  }
+];

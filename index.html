@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Examen CQP APS — UV02</title>
+  <link rel="stylesheet" href="UV2-style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <button id="sidebarClose" class="sidebar-close" type="button" aria-label="Fermer le menu des UV">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+
+      <div class="brand">
+        <div id="brandMark" class="brand-mark" aria-hidden="true"></div>
+        <div>
+          <h1>EXAMEN CQP APS</h1>
+          <p>Agent de Prévention et de Sécurité</p>
+        </div>
+      </div>
+
+      <nav class="side-nav" aria-label="Navigation principale">
+        <button class="home-link" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z"/></svg>
+          <span>Accueil</span>
+        </button>
+
+        <p class="nav-label">UNITÉS DE VALEUR</p>
+
+        <button class="uv-card active" type="button" data-uv="uv2">
+          <svg class="file-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 2h8l5 5v15H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/>
+            <path d="M14 2v6h6M8 13h7M8 17h7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+          <span class="uv-copy">
+            <strong>UV02 - Juridique</strong>
+            <small><span id="sidebarTotalUv2">75</span> questions</small>
+          </span>
+          <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+
+        <button class="uv-card" type="button" data-uv="uv3">
+          <svg class="file-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 2h8l5 5v15H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/>
+            <path d="M14 2v6h6M8 13h7M8 17h7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+          <span class="uv-copy">
+            <strong>UV03 - Gestion des conflits</strong>
+            <small><span id="sidebarTotalUv3">50</span> questions</small>
+          </span>
+          <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+
+        <button class="uv-card" type="button" data-uv="uv4">
+          <svg class="file-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 2h8l5 5v15H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/>
+            <path d="M14 2v6h6M8 13h7M8 17h7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+          <span class="uv-copy">
+            <strong>UV04 - Module stratégique</strong>
+            <small><span id="sidebarTotalUv4">25</span> questions</small>
+          </span>
+          <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+
+        <button class="uv-card" type="button" data-uv="uv5">
+          <svg class="file-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 2h8l5 5v15H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/>
+            <path d="M14 2v6h6M8 13h7M8 17h7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+          <span class="uv-copy">
+            <strong>UV05 - Incendie</strong>
+            <small><span id="sidebarTotalUv5">25</span> questions</small>
+          </span>
+          <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="goal-card">
+          <div class="trophy" aria-hidden="true">🏆</div>
+          <div>
+            <strong>Votre objectif</strong>
+            <p>Réussir votre examen<br>Bonne préparation !</p>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <button id="sidebarBackdrop" class="sidebar-backdrop" type="button" aria-label="Fermer le menu des UV"></button>
+
+    <div class="workspace">
+      <header class="top-header">
+        <button id="sidebarToggle" class="sidebar-toggle" type="button" aria-label="Ouvrir le menu des UV" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <span>UV</span>
+        </button>
+
+        <div class="exam-heading">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v18H6.5A3.5 3.5 0 0 0 3 23V5.5ZM21 5.5A3.5 3.5 0 0 0 17.5 2H13v18h4.5A3.5 3.5 0 0 1 21 23V5.5Z"/>
+            <path d="M6 7h3M6 11h3M15 7h3M15 11h3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <span id="examTitle">UV02 - JURIDIQUE</span>
+        </div>
+
+        <div class="header-actions">
+          <div class="timer" aria-label="Temps écoulé">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v5l3 2M9 2h6M12 2v3"/></svg>
+            <span id="timer">00:00:00</span>
+          </div>
+          <button id="quitBtn" class="quit-btn" type="button">
+            <span>Quitter</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5M14 8l4 4-4 4M8 12h10"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section id="quizSection" class="quiz-panel">
+          <div class="quiz-topline">
+            <div class="progress-copy">Question <span id="currentTop">1</span> sur <span id="totalTop">75</span></div>
+            <div class="counter"><span id="counterCurrent">1</span> / <span id="counterTotal">75</span></div>
+          </div>
+
+          <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+
+          <h2 id="questionText" class="question-text">Chargement de la question…</h2>
+          <div id="optionsContainer" class="options-container"></div>
+
+          <div id="feedbackBox" class="feedback-box" hidden>
+            <strong>Explication</strong>
+            <p id="feedbackText"></p>
+          </div>
+
+          <div class="question-actions">
+            <button id="prevBtn" class="secondary-btn" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+              <span>Question précédente</span>
+            </button>
+            <button id="nextBtn" class="primary-btn" type="button">
+              <span>Question suivante</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <nav class="pagination-panel" aria-label="Navigation entre les questions">
+          <button id="pagePrev" class="page-arrow" type="button" aria-label="Question précédente">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+          </button>
+          <div id="pagination" class="pagination"></div>
+          <button id="pageNext" class="page-arrow" type="button" aria-label="Question suivante">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+          </button>
+        </nav>
+
+        <section id="resultSection" class="result-screen" hidden>
+          <h2>Session terminée</h2>
+          <p id="finalScore"></p>
+          <button id="restartBtn" class="primary-btn" type="button">Recommencer</button>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="UV/uv2.js"></script>
+  <script src="UV/uv3.js"></script>
+  <script src="UV/uv4.js"></script>
+  <script src="UV/uv5.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
