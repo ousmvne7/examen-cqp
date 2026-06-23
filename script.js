@@ -8,10 +8,35 @@ const exactOptions = [
   "D'une carte professionnelle dématérialisée délivrée par la C.L.A.C"
 ];
 
+function questionKey(text) {
+  return text
+    .replace("guaranteed", "garanti")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function deduplicateQuestions(source) {
+  if (!Array.isArray(source)) return [];
+
+  const seen = new Set();
+  return source.reduce((uniqueQuestions, question) => {
+    const key = questionKey(question.question);
+    if (!key || seen.has(key)) return uniqueQuestions;
+
+    seen.add(key);
+    uniqueQuestions.push({
+      ...question,
+      options: [...question.options]
+    });
+    return uniqueQuestions;
+  }, []);
+}
+
 function prepareUv2Questions() {
-  const questions = Array.isArray(uv2Questions)
-    ? uv2Questions.map(q => ({ ...q, options: [...q.options] }))
-    : [];
+  const questions = deduplicateQuestions(uv2Questions);
   const matchingIndex = questions.findIndex(q =>
     q.question.replace("guaranteed", "garanti") === targetQuestion
   );
@@ -33,21 +58,15 @@ const exams = {
   },
   uv3: {
     title: "UV03 - GESTION DES CONFLITS",
-    questions: Array.isArray(uv3Questions)
-      ? uv3Questions.map(q => ({ ...q, options: [...q.options] }))
-      : []
+    questions: deduplicateQuestions(uv3Questions)
   },
   uv4: {
     title: "UV04 - MODULE STRATÉGIQUE",
-    questions: Array.isArray(uv4Questions)
-      ? uv4Questions.map(q => ({ ...q, options: [...q.options] }))
-      : []
+    questions: deduplicateQuestions(uv4Questions)
   },
   uv5: {
     title: "UV05 - INCENDIE",
-    questions: Array.isArray(uv5Questions)
-      ? uv5Questions.map(q => ({ ...q, options: [...q.options] }))
-      : []
+    questions: deduplicateQuestions(uv5Questions)
   }
 };
 
@@ -75,6 +94,12 @@ const els = {
   counterCurrent: $("counterCurrent"),
   counterTotal: $("counterTotal"),
   examTitle: $("examTitle"),
+  sidebarTotals: {
+    uv2: $("sidebarTotalUv2"),
+    uv3: $("sidebarTotalUv3"),
+    uv4: $("sidebarTotalUv4"),
+    uv5: $("sidebarTotalUv5")
+  },
   uvCards: document.querySelectorAll(".uv-card[data-uv]"),
   sidebar: document.querySelector(".sidebar"),
   sidebarToggle: $("sidebarToggle"),
@@ -91,6 +116,12 @@ const els = {
   finalScore: $("finalScore"),
   restart: $("restartBtn")
 };
+
+Object.entries(exams).forEach(([uvKey, exam]) => {
+  if (els.sidebarTotals[uvKey]) {
+    els.sidebarTotals[uvKey].textContent = exam.questions.length;
+  }
+});
 
 function mountBrandLogo() {
   if (!els.brandMark || els.brandMark.childElementCount) return;
