@@ -35,6 +35,17 @@ function deduplicateQuestions(source) {
   }, []);
 }
 
+function shuffleQuestions(source) {
+  const shuffled = [...source];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+
+  return shuffled;
+}
+
 function prepareUv2Questions() {
   const questions = deduplicateQuestions(uv2Questions);
   const matchingIndex = questions.findIndex(q =>
@@ -54,19 +65,19 @@ function prepareUv2Questions() {
 const exams = {
   uv2: {
     title: "UV02 - JURIDIQUE",
-    questions: prepareUv2Questions()
+    questions: shuffleQuestions(prepareUv2Questions())
   },
   uv3: {
     title: "UV03 - GESTION DES CONFLITS",
-    questions: deduplicateQuestions(uv3Questions)
+    questions: shuffleQuestions(deduplicateQuestions(uv3Questions))
   },
   uv4: {
     title: "UV04 - MODULE STRATÉGIQUE",
-    questions: deduplicateQuestions(uv4Questions)
+    questions: shuffleQuestions(deduplicateQuestions(uv4Questions))
   },
   uv5: {
     title: "UV05 - INCENDIE",
-    questions: deduplicateQuestions(uv5Questions)
+    questions: shuffleQuestions(deduplicateQuestions(uv5Questions))
   }
 };
 
@@ -305,6 +316,8 @@ function showResults() {
 }
 
 function restartQuiz() {
+  exams[activeUv].questions = shuffleQuestions(exams[activeUv].questions);
+  quizData = exams[activeUv].questions;
   state.current = 0;
   state.answers.clear();
   state.score = 0;
