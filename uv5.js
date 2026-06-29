@@ -24,12 +24,6 @@ const uv5Questions = [
     tip: "L'alarme générale sélective avertit discrètement une catégorie déterminée de personnel chargée d'agir."
   },
   {
-    question: "Quel peut être l'un des dangers des fumées ?",
-    options: ["Leur couleur", "Aucun, elles ne sont pas dangereuses", "Aucune des autres réponses", "L'opacité", "La fluidité"],
-    correctText: "L'opacité",
-    tip: "Les fumées opaques masquent les obstacles et les issues, ce qui complique fortement l'évacuation."
-  },
-  {
     question: "Un extincteur à CO₂ est-il un extincteur à pression permanente ?",
     options: ["Oui", "Non s'il est rechargeable", "Aucune des autres réponses", "Oui s'il est muni d'un densimètre", "Non"],
     correctText: "Oui",
@@ -66,28 +60,10 @@ const uv5Questions = [
     tip: "La classe F concerne les feux d'huiles et de graisses utilisées dans les appareils de cuisson."
   },
   {
-    question: "Une des causes de départ de feu peut être :",
-    options: ["Les causes législatives", "Les causes perdues", "Aucune des autres réponses", "Les causes surnaturelles", "Les causes humaines"],
-    correctText: "Les causes humaines",
-    tip: "Les comportements humains figurent parmi les principales origines des incendies."
-  },
-  {
     question: "Combien y a-t-il de classes de feu ?",
     options: ["Aucune des autres réponses", "Une", "Cinq", "Six", "Deux"],
     correctText: "Cinq",
     tip: "La classification présentée dans ce module comporte cinq classes : A, B, C, D et F."
-  },
-  {
-    question: "Quelle est la distance d'attaque préconisée avec un extincteur à eau ?",
-    options: ["De 2 à 3 mètres", "Aucune des autres réponses", "Environ 1 mètre", "De 3 à 4 mètres", "De 6 à 7 mètres"],
-    correctText: "De 2 à 3 mètres",
-    tip: "Il faut commencer l'attaque à environ 2 à 3 mètres puis progresser si le feu diminue."
-  },
-  {
-    question: "Une des causes de départ de feu peut être :",
-    options: ["Les causes législatives", "Les causes perdues", "Les causes surnaturelles", "Aucune des autres réponses", "Les causes humaines"],
-    correctText: "Les causes humaines",
-    tip: "Une action ou une négligence humaine peut fournir l'énergie d'activation nécessaire au départ du feu."
   },
   {
     question: "Combien de types de pressions différentes trouve-t-on sur un extincteur ?",
@@ -120,33 +96,54 @@ const uv5Questions = [
     tip: "Fermer les ouvertures ralentit l'apport d'oxygène et la propagation des fumées et des flammes."
   },
   {
-    question: "Quelle est la fonction de l'E.C.S. ?",
-    options: ["Mettre en sécurité le bâtiment", "Fournir de l'Eau Conditionnée Suffisante", "Aucune des autres réponses", "Collecter les informations provenant des détecteurs volumétriques", "Collecter les informations provenant des DAI et des DM"],
-    correctText: "Collecter les informations provenant des DAI et des DM",
-    tip: "L'E.C.S. reçoit et traite les informations d'alarme incendie issues des DAI et des DM."
-  },
-  {
-    question: "La classe de feu F concerne :",
-    options: ["Rien car cette classe n'existe pas", "Les feux de liquides incombustibles", "Aucune des autres réponses", "Les feux de forêt", "Les feux de dépôts graisseux servant d'auxiliaires de cuisson"],
-    correctText: "Les feux de dépôts graisseux servant d'auxiliaires de cuisson",
-    tip: "La classe F vise spécifiquement les feux d'huiles et de graisses de cuisson."
-  },
-  {
     question: "Un extincteur à CO₂ est-il un extincteur à pression auxiliaire ?",
     options: ["Non", "Non s'il est rechargeable", "Oui", "Oui s'il est muni d'un anémomètre", "Aucune des autres réponses"],
     correctText: "Non",
     tip: "Le CO₂ est déjà stocké sous pression : l'appareil fonctionne à pression permanente et non auxiliaire."
   },
   {
-    question: "Qu'est-ce qu'un I.G.H. ?",
-    options: ["Immeuble de Groupement Habilité", "Aucune des autres réponses", "Installation Grandement Habitée", "Installation de Grande Hauteur", "Immeuble de Grande Hauteur"],
-    correctText: "Immeuble de Grande Hauteur",
-    tip: "L'acronyme I.G.H. désigne un Immeuble de Grande Hauteur."
+    question: "Un extincteur à CO2 est-il un extincteur à pression auxiliaire ?",
+    options: ["Oui", "Non s'il est rechargeable", "Oui s'il est muni d'un anémomètre", "Aucune des autres réponses", "Non"],
+    correctText: "Non"
   },
   {
-    question: "Quelle est la fonction de l'E.C.S. ?",
-    options: ["Mettre en sécurité le bâtiment", "Collecter les informations provenant des DAI et des DM", "Fournir de l'Eau Conditionnée Suffisante", "Collecter les informations provenant des détecteurs volumétriques", "Aucune des autres réponses"],
-    correctText: "Collecter les informations provenant des DAI et des DM",
-    tip: "L'E.C.S. centralise les signaux des détecteurs automatiques d'incendie et des déclencheurs manuels."
+    question: "Qu'est-ce qu'un E.R.P. ?",
+    options: ["Aucune des autres réponses", "Etablissement Recevant du Personnel", "Etablissement Recevant le Président", "Etablissement Recevant du Public", "Etablissement Recevant le Plus grand nombre"],
+    correctText: "Etablissement Recevant du Public"
+  },
+  {
+    question: "L'air est composé à environ 21% :",
+    options: ["Aucune des autres réponses", "De dioxyde de carbone", "De gaz rares", "D'azote", "D'oxygène"],
+    correctText: "D'oxygène"
+  },
+  {
+    question: "Un extincteur à CO2 est-il un extincteur à pression permanente ?",
+    options: ["Aucune des autres réponses", "Oui", "Non", "Non s'il est rechargeable", "Oui s'il est muni d'un densimetre"],
+    correctText: "Oui"
+  },
+  {
+    question: "Qu'est-ce qui caractérise un extincteur à CO2 ?",
+    options: ["Son tromblon", "Son manomètre", "Sa forme ronde", "Aucune des autres réponses", "Sa couleur"],
+    correctText: "Son tromblon"
+  },
+  {
+    question: "Lors de la mise en place d'un permis-feu, quelles consignes sont importantes à confier à l'exécutant ?",
+    options: ["Surveiller les projections incandescentes et les points de chute pendant le travail", "Toutes ces consignes sont à prendre en compte", "Aveugler les ouvertures, interstices, fissures, ….", "Dégager largement la zone de travail de tout matériel combustible ou inflammable", "Prendre toute disposition pour éviter le déclenchement du système de détection incendie"],
+    correctText: "Toutes ces consignes sont à prendre en compte"
+  },
+  {
+    question: "Dans quel cas utilise t-on de préférence un extincteur à eau pulvérisé ?",
+    options: ["Aucune des autres réponses", "Feu d'origine électrique", "Feu de métaux", "Feu d'essence", "Feu de poubelles"],
+    correctText: "Feu de poubelles"
+  },
+  {
+    question: "Vous effectuez une ronde, un ouvrier d'une société extérieure réalise des travaux par points chauds. A priori vous n'avez ni consignes, ni permis-feu. Que faites-vous ?",
+    options: ["Aucune des autres réponses", "Je passe mon chemin pour laisser l'ouvrier faire son travail", "Je verbalise l'ouvrier contrevenant", "Je contacte le PCS pour vérification et selon consigne je fais cesser les travaux", "Je contact le PC sécurité pour demander la conduite à tenir"],
+    correctText: "Je contacte le PCS pour vérification et selon consigne je fais cesser les travaux"
+  },
+  {
+    question: "En cas de départ de feu, quelle doit être l'attitude de l'agent de sécurité ?",
+    options: ["Attendre l'arrivée des pompiers pour évacuer", "Aucune des autres réponses", "Ouvrir les portes et les fenétres avant d'évacuer", "Récupérer toutes mes affaires avant d'évacuer", "Tenter l'extinction du départ de feu"],
+    correctText: "Tenter l'extinction du départ de feu"
   }
 ];

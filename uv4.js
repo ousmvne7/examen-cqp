@@ -30,22 +30,10 @@ const uv4Questions = [
     tip: "Un événement grave exige une alerte orale immédiate, suivie d'une trace écrite adressée à la hiérarchie."
   },
   {
-    question: "Comment votre hiérarchie peut-elle vous transmettre une nouvelle consigne permanente ?",
-    options: ["Par écrit", "Par la main courante électronique", "Remise en mains propres", "Toutes les réponses sont exactes", "Par email sur la boîte mail du PC"],
-    correctText: "Toutes les réponses sont exactes",
-    tip: "Tous ces moyens permettent de transmettre et de conserver une consigne permanente."
-  },
-  {
     question: "Une consigne client, qui vous prévient que demain un VIP viendra visiter l'établissement, est :",
     options: ["Une consigne permanente", "Une consigne ponctuelle", "Aucune des autres réponses", "Une consigne spéciale", "Une consigne générale"],
     correctText: "Une consigne ponctuelle",
     tip: "La visite du VIP est un événement limité dans le temps : la consigne s'applique donc ponctuellement."
-  },
-  {
-    question: "Vous devez, suite à un événement grave, remonter l'information à votre responsable hiérarchique. Que devez-vous faire ?",
-    options: ["Je lui donnerai quand je serai convoqué à l'agence", "Je l'appelle pour un compte rendu oral et lui transmettrai par email", "Aucune des autres réponses", "Je lui transmettrai par voie postale", "Je lui transmets un rapport quand je le croise"],
-    correctText: "Je l'appelle pour un compte rendu oral et lui transmettrai par email",
-    tip: "La gravité impose de prévenir sans délai par téléphone, puis de confirmer les faits par écrit."
   },
   {
     question: "Le compte rendu oral ou écrit est un moyen de communication :",
@@ -66,12 +54,6 @@ const uv4Questions = [
     tip: "Cette consigne vise un lieu et un risque précis ; elle est donc particulière à cette situation."
   },
   {
-    question: "Le compte rendu oral ou écrit est un moyen de communication :",
-    options: ["Qui reste interne à votre entreprise sans conséquence pénale", "Il est effectué uniquement à l'aide d'un émetteur-récepteur", "Simple et direct avec sa hiérarchie", "Aucune des autres réponses", "Il évite dans tous les cas de rédiger un rapport complet qui serait trop contraignant"],
-    correctText: "Simple et direct avec sa hiérarchie",
-    tip: "Le compte rendu permet une communication directe et structurée avec le responsable hiérarchique."
-  },
-  {
     question: "Les consignes spéciales de votre société de sécurité doivent-elles avoir un numéro séquentiel de version ?",
     options: ["Non, puisqu'elles sont permanentes", "Oui, pour pouvoir les ranger dans les archives", "Non, cela ne sert à rien", "Oui, pour savoir si c'est la bonne version en vigueur", "Aucune des autres réponses"],
     correctText: "Oui, pour savoir si c'est la bonne version en vigueur",
@@ -84,22 +66,10 @@ const uv4Questions = [
     tip: "La main courante doit retracer l'agent, les horaires, les anomalies rencontrées et les mesures prises."
   },
   {
-    question: "Le compte rendu oral ou écrit est un moyen de communication :",
-    options: ["Il est effectué uniquement à l'aide d'un émetteur-récepteur", "Qui reste interne à votre entreprise sans conséquence pénale", "Il évite dans tous les cas de rédiger un rapport complet qui serait trop contraignant", "Simple et direct avec sa hiérarchie", "Aucune des autres réponses"],
-    correctText: "Simple et direct avec sa hiérarchie",
-    tip: "Sa fonction première est de transmettre simplement les faits utiles à la chaîne hiérarchique."
-  },
-  {
     question: "La consigne affichée à proximité des sorties concernant l'évacuation est :",
     options: ["Aucune des autres réponses", "Une consigne ponctuelle", "Une consigne particulière", "Une consigne spéciale", "Une consigne permanente"],
     correctText: "Une consigne permanente",
     tip: "La procédure d'évacuation reste applicable en permanence et doit être disponible à tout moment."
-  },
-  {
-    question: "De quelle couleur est-il préférable d'écrire les interventions liées à l'incendie sur une main courante ?",
-    options: ["En bleu", "En rouge", "En vert", "Aucune des autres réponses", "En noir"],
-    correctText: "En rouge",
-    tip: "Le rouge distingue immédiatement les événements relatifs à l'incendie."
   },
   {
     question: "De quelle couleur est-il préférable d'écrire les événements quotidiens sur une main courante ?",
@@ -120,12 +90,6 @@ const uv4Questions = [
     tip: "La main courante n'est pas imposée ici par un texte spécifique, mais sa traçabilité protège l'agent et l'entreprise en cas de contrôle judiciaire."
   },
   {
-    question: "De quelle couleur est-il préférable d'écrire les événements quotidiens sur une main courante ?",
-    options: ["En vert", "En rouge", "En jaune", "En noir", "Aucune des autres réponses"],
-    correctText: "En noir",
-    tip: "Le noir est utilisé pour les inscriptions quotidiennes ordinaires."
-  },
-  {
     question: "Vous disposez d'une main courante informatisée. Devez-vous quand même disposer d'une main courante papier ?",
     options: ["Oui, dans l'éventualité où la main courante informatisée serait hors service", "Non, cela ne sert à rien", "Aucune des autres réponses", "Non, puisqu'on peut tout imprimer plus tard", "Oui, et on doit remplir les deux"],
     correctText: "Oui, dans l'éventualité où la main courante informatisée serait hors service",
@@ -138,15 +102,28 @@ const uv4Questions = [
     tip: "La main courante constitue une trace professionnelle utile et protectrice lorsqu'elle est demandée par les autorités."
   },
   {
-    question: "Vous disposez d'une main courante informatisée. Devez-vous quand même disposer d'une main courante papier ?",
-    options: ["Non, puisqu'on peut tout imprimer plus tard", "Non, cela ne sert à rien", "Aucune des autres réponses", "Oui, et on doit remplir les deux", "Oui, dans l'éventualité où la main courante informatisée serait hors service"],
-    correctText: "Oui, dans l'éventualité où la main courante informatisée serait hors service",
-    tip: "Une solution papier de secours permet de continuer les inscriptions pendant toute indisponibilité du système."
+    question: "Les consignes spéciales de votre société de sécurité doivent-elles avoir un numéro séquentiel de version ?",
+    options: ["Non, cela ne sert à rien", "Non, puisqu'elles sont permanentes", "Aucune des autres réponses", "Oui, pour pouvoir les ranger dans les archives", "Oui, pour savoir si c'est la bonne version en vigueu"],
+    correctText: "Oui, pour savoir si c'est la bonne version en vigueu"
   },
   {
-    question: "La consigne affichée à proximité des sorties concernant l'évacuation est :",
-    options: ["Une consigne spéciale", "Une consigne particulière", "Aucune des autres réponses", "Une consigne permanente", "Une consigne ponctuelle"],
-    correctText: "Une consigne permanente",
-    tip: "Les instructions d'évacuation doivent rester affichées et applicables de façon permanente."
+    question: "Lors d'une alarme intrusion comment faites-vous pour transmettre les consignes à votre collègue ?",
+    options: ["Par SMS", "En l'appelant sur son téléphone personnel", "En lui envoyant un email", "En le joignant avec votre émetteur récepteur portatifi", "Aucune des autres reponses"],
+    correctText: "En le joignant avec votre émetteur récepteur portatifi"
+  },
+  {
+    question: "Une main courante a comme objectif :",
+    options: ["De relater tous les évènements/incidents liés à la sécurité lors de la vacation", "Aucune des autres réponses", "De transmettre uniquement des consignes", "De noter uniquement les problèmes techniques", "De noter uniquement les interventions de la vacation"],
+    correctText: "De relater tous les évènements/incidents liés à la sécurité lors de la vacation"
+  },
+  {
+    question: "La mise en place et l'utilisation d'une main courante est-elle soumise à une réglementation ?",
+    options: ["Oui, c'est la loi du 12 juillet 1983 qui l'impose", "Oui, c'est le C.S.I qui l'impose", "Oui, c'est la convention collective qui l'impose", "Non, mais elle est permet de se protéger en cas de saisie par les autorités", "Aucune des autres réponses"],
+    correctText: "Non, mais elle est permet de se protéger en cas de saisie par les autorités"
+  },
+  {
+    question: "Vous disposez d'une main courante informatisée, devez-vous quand même disposer d'une main courante papier ?",
+    options: ["Aucune des autres réponses", "Non, cela ne sert à rien", "Oui, dans l'éventualité où la main courante informatisée soit hors service", "Non, puisqu'on peut tout imprimer plus tard", "Oui, et on doit remplir les deux"],
+    correctText: "Oui, dans l'éventualité où la main courante informatisée soit hors service"
   }
 ];

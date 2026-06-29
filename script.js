@@ -110,6 +110,10 @@ const exams = {
     title: "UV10 - SURVEILLANCE ÉLECTRONIQUE",
     questions: shuffleQuestions(deduplicateQuestions(uv10Questions))
   },
+  uv11: {
+    title: "UV11 - GESTION DES RISQUES",
+    questions: shuffleQuestions(deduplicateQuestions(uv11Questions))
+  },
   uv12: {
     title: "UV12 - ÉVÉNEMENTIEL",
     questions: shuffleQuestions(deduplicateQuestions(uv12Questions))
@@ -145,6 +149,7 @@ const miniExamQuotas = {
   uv8: 15,
   uv9: 8,
   uv10: 15,
+  uv11: 8,
   uv12: 15,
   uv14: 15
 };
@@ -270,6 +275,7 @@ const els = {
     uv8: $("sidebarTotalUv8"),
     uv9: $("sidebarTotalUv9"),
     uv10: $("sidebarTotalUv10"),
+    uv11: $("sidebarTotalUv11"),
     uv12: $("sidebarTotalUv12"),
     uv14: $("sidebarTotalUv14")
   },
