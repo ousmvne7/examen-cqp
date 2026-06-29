@@ -432,6 +432,7 @@ svg { display: block; }
   color: #79252c;
 }
 
+.feedback-box,
 .feedback-box[hidden] { display: none; }
 .feedback-box strong { display: block; margin-bottom: 5px; font-size: 15px; }
 .feedback-box p { margin: 0; font-size: 14px; line-height: 1.45; }

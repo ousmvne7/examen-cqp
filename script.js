@@ -418,10 +418,8 @@ function renderQuestion() {
   els.totalTop.textContent = total;
   els.counterTotal.textContent = total;
   els.progress.style.width = `${Math.max(number / total * 100, 1.3)}%`;
-  els.feedbackBox.hidden = examMode || !isWrongAnswer;
-  els.feedbackText.textContent = isWrongAnswer
-    ? `${question.tip || "Revoyez cette notion."} Bonne réponse : ${question.correctText}.`
-    : "";
+  els.feedbackBox.hidden = true;
+  els.feedbackText.textContent = "";
   els.prev.disabled = examMode || state.current === 0;
   els.pagePrev.disabled = examMode || state.current === 0;
   els.next.disabled = examMode && !state.examFeedback.has(state.current);
