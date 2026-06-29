@@ -121,19 +121,30 @@ const exams = {
 };
 
 const EXAM_MODE_KEY = "exam";
-const EXAM_TARGET_TOTAL = 99;
 const EXAM_SECONDS_PER_QUESTION = 45;
-const officialExamQuotas = {
+const officialExamModules = [
+  { uvKey: "uv2", quota: 15 },
+  { uvKey: "uv3", quota: 10 },
+  { uvKey: "uv4", quota: 5 },
+  { uvKey: "uv5", quota: 5 },
+  { uvKey: "uv6", quota: 8 },
+  { uvKey: "uv7", quota: 10 },
+  { uvKey: "uv8", quota: 15 },
+  { uvKey: "uv9", quota: 8 },
+  { uvKeys: ["uv10", "uv12", "uv14"], quota: 15 },
+  { uvKey: "uv11", quota: 8 }
+];
+
+const miniExamQuotas = {
   uv2: 15,
   uv3: 10,
   uv4: 5,
-  uv5: 10,
-  uv6: 5,
+  uv5: 5,
+  uv6: 8,
   uv7: 10,
   uv8: 15,
-  uv9: 10,
+  uv9: 8,
   uv10: 15,
-  uv11: 8,
   uv12: 15,
   uv14: 15
 };
@@ -144,50 +155,29 @@ exams[EXAM_MODE_KEY] = {
 };
 
 function isExamMode() {
-  return activeUv === EXAM_MODE_KEY;
+  return activeUv === EXAM_MODE_KEY || state.sessionMode === "mini-exam";
+}
+
+function isMiniExamMode() {
+  return state.sessionMode === "mini-exam";
 }
 
 function allocateExamQuestions() {
-  const missingQuota = Object.entries(officialExamQuotas)
-    .filter(([uvKey]) => !exams[uvKey]?.questions.length)
-    .reduce((sum, [, quota]) => sum + quota, 0);
-  const examTotalWithoutMissingUv = Math.max(0, EXAM_TARGET_TOTAL - missingQuota);
-  const availableModules = Object.entries(officialExamQuotas)
-    .map(([uvKey, quota]) => ({
-      uvKey,
-      quota,
-      available: exams[uvKey]?.questions.length || 0
-    }))
-    .filter(module => module.available > 0);
+  return officialExamModules
+    .map(module => {
+      const uvKeys = module.uvKeys || [module.uvKey];
+      const available = uvKeys.reduce((sum, uvKey) => {
+        return sum + (exams[uvKey]?.questions.length || 0);
+      }, 0);
 
-  const totalAvailable = availableModules.reduce((sum, module) => sum + module.available, 0);
-  const targetTotal = Math.min(examTotalWithoutMissingUv, totalAvailable);
-  const quotaTotal = availableModules.reduce((sum, module) => sum + module.quota, 0);
-
-  const allocations = availableModules.map(module => {
-    const exact = module.quota / quotaTotal * targetTotal;
-    const count = Math.min(Math.floor(exact), module.available);
-    return {
-      ...module,
-      exact,
-      count,
-      remainder: exact - Math.floor(exact)
-    };
-  });
-
-  let allocatedTotal = allocations.reduce((sum, module) => sum + module.count, 0);
-  while (allocatedTotal < targetTotal) {
-    const next = allocations
-      .filter(module => module.count < module.available)
-      .sort((a, b) => b.remainder - a.remainder || b.quota - a.quota)[0];
-
-    if (!next) break;
-    next.count += 1;
-    next.remainder = 0;
-    allocatedTotal += 1;
-  }
-
-  return allocations;
+      return {
+        ...module,
+        uvKeys,
+        available,
+        count: Math.min(module.quota, available)
+      };
+    })
+    .filter(module => module.count > 0);
 }
 
 function getExamTargetTotal() {
@@ -198,11 +188,17 @@ function buildExamSimulation() {
   const selectedQuestions = [];
 
   allocateExamQuestions().forEach(module => {
-    const moduleQuestions = shuffleQuestions(exams[module.uvKey].questions)
+    const questionPool = module.uvKeys.flatMap(uvKey =>
+      (exams[uvKey]?.questions || []).map(question => ({
+        ...question,
+        sourceUv: uvKey.toUpperCase()
+      }))
+    );
+
+    const moduleQuestions = shuffleQuestions(questionPool)
       .slice(0, module.count)
       .map((question, index) => ({
         ...question,
-        sourceUv: module.uvKey.toUpperCase(),
         moduleIndex: index + 1,
         moduleTotal: module.count
       }));
@@ -213,10 +209,27 @@ function buildExamSimulation() {
   return selectedQuestions;
 }
 
+function buildMiniExamSimulation(uvKey) {
+  const quota = miniExamQuotas[uvKey];
+  const sourceQuestions = exams[uvKey]?.questions || [];
+  const count = Math.min(quota || sourceQuestions.length, sourceQuestions.length);
+
+  return shuffleQuestions(sourceQuestions)
+    .slice(0, count)
+    .map((question, index) => ({
+      ...question,
+      sourceUv: uvKey.toUpperCase(),
+      moduleIndex: index + 1,
+      moduleTotal: count
+    }));
+}
+
 let activeUv = "uv2";
 let quizData = exams[activeUv].questions;
 
 const state = {
+  sessionMode: "revision",
+  revisionQuestions: new Map(),
   current: 0,
   answers: new Map(),
   score: 0,
@@ -238,9 +251,6 @@ const els = {
   qcuCorrectionBox: $("qcuCorrectionBox"),
   qcuAnswerStatus: $("qcuAnswerStatus"),
   qcuNote: $("qcuNote"),
-  qcuStartedAt: $("qcuStartedAt"),
-  qcuFinishedAt: $("qcuFinishedAt"),
-  qcuDuration: $("qcuDuration"),
   options: $("optionsContainer"),
   feedbackBox: $("feedbackBox"),
   feedbackText: $("feedbackText"),
@@ -278,7 +288,8 @@ const els = {
   quit: $("quitBtn"),
   finalScore: $("finalScore"),
   resultBreakdown: $("resultBreakdown"),
-  restart: $("restartBtn")
+  restart: $("restartBtn"),
+  miniExam: $("miniExamBtn")
 };
 
 Object.entries(exams).forEach(([uvKey, exam]) => {
@@ -379,9 +390,6 @@ function renderQcuCorrection(question, savedAnswer) {
   els.qcuAnswerStatus.textContent = feedback.expired ? "TEMPS ÉCOULÉ" : "BONNE RÉPONSE";
   els.qcuAnswerStatus.classList.toggle("expired", Boolean(feedback.expired));
   els.qcuNote.textContent = `NOTE : ${isCorrect ? 1 : 0} point`;
-  els.qcuStartedAt.textContent = formatClock(feedback.startedAt);
-  els.qcuFinishedAt.textContent = formatClock(feedback.finishedAt);
-  els.qcuDuration.textContent = feedback.duration;
 }
 
 function renderQuestion() {
@@ -402,6 +410,17 @@ function renderQuestion() {
   const uvLabel = isExamMode()
     ? getQuestionUvTitle(question)
     : exams[activeUv].title;
+
+  if (els.miniExam) {
+    const isAvailableUv = activeUv !== EXAM_MODE_KEY && Boolean(exams[activeUv]?.questions.length);
+    const miniCount = Math.min(miniExamQuotas[activeUv] || 0, exams[activeUv]?.questions.length || 0);
+    els.miniExam.hidden = !isAvailableUv;
+    if (els.miniExam.parentElement) els.miniExam.parentElement.hidden = !isAvailableUv;
+    els.miniExam.disabled = isAvailableUv && miniCount === 0;
+    els.miniExam.textContent = isMiniExamMode()
+      ? "Retour révision complète"
+      : `Lancer mini examen UV (${miniCount} q.)`;
+  }
 
   if (els.questionUvLabel) els.questionUvLabel.textContent = uvLabel;
   if (els.questionTimer) {
@@ -614,12 +633,15 @@ function showResults() {
 }
 
 function restartQuiz() {
-  if (isExamMode()) {
+  if (activeUv === EXAM_MODE_KEY) {
     exams[EXAM_MODE_KEY].questions = buildExamSimulation();
+    quizData = exams[EXAM_MODE_KEY].questions;
+  } else if (isMiniExamMode()) {
+    quizData = buildMiniExamSimulation(activeUv);
   } else {
     exams[activeUv].questions = shuffleQuestions(exams[activeUv].questions);
+    quizData = exams[activeUv].questions;
   }
-  quizData = exams[activeUv].questions;
   state.current = 0;
   state.answers.clear();
   state.examFeedback.clear();
@@ -636,7 +658,8 @@ function switchExam(uvKey) {
   if (!exams[uvKey] || uvKey === activeUv) return;
 
   activeUv = uvKey;
-  if (isExamMode()) {
+  state.sessionMode = uvKey === EXAM_MODE_KEY ? "full-exam" : "revision";
+  if (activeUv === EXAM_MODE_KEY) {
     exams[EXAM_MODE_KEY].questions = buildExamSimulation();
   }
   quizData = exams[activeUv].questions;
@@ -660,6 +683,39 @@ function switchExam(uvKey) {
   requestAnimationFrame(() => scrollToCurrentQuestion());
 }
 
+function resetCurrentSession() {
+  state.current = 0;
+  state.answers.clear();
+  state.examFeedback.clear();
+  state.score = 0;
+  resetTimer();
+  els.quizSection.hidden = false;
+  document.querySelector(".pagination-panel").hidden = false;
+  els.resultSection.hidden = true;
+  renderQuestion();
+  requestAnimationFrame(() => scrollToCurrentQuestion());
+}
+
+function toggleMiniExam() {
+  if (activeUv === EXAM_MODE_KEY) return;
+
+  if (isMiniExamMode()) {
+    state.sessionMode = "revision";
+    quizData = exams[activeUv].questions;
+    els.examTitle.textContent = exams[activeUv].title;
+    resetCurrentSession();
+    return;
+  }
+
+  const miniQuestions = buildMiniExamSimulation(activeUv);
+  if (!miniQuestions.length) return;
+
+  state.sessionMode = "mini-exam";
+  quizData = miniQuestions;
+  els.examTitle.textContent = `${exams[activeUv].title} - MINI EXAMEN`;
+  resetCurrentSession();
+}
+
 els.prev.addEventListener("click", () => goTo(state.current - 1));
 els.pagePrev.addEventListener("click", () => goTo(state.current - 1));
 els.pageNext.addEventListener("click", () => goTo(state.current + 1));
@@ -674,6 +730,7 @@ els.next.addEventListener("click", () => {
   else goTo(state.current + 1);
 });
 els.restart.addEventListener("click", restartQuiz);
+if (els.miniExam) els.miniExam.addEventListener("click", toggleMiniExam);
 els.uvCards.forEach(card => {
   card.addEventListener("click", () => switchExam(card.dataset.uv));
 });
