@@ -67,8 +67,8 @@ const uv10Questions = [
   },
   {
     question: "Toute personne intéressée peut-elle demander d'avoir accès aux enregistrements de vidéosurveillance qui la concerne et demander sa destruction?",
-    options: ["Non, car les enregistrements doivent restent toujours confidentiels", "Non, car seuls les opérateurs publics peuvent visionner des images privées", "Oui, après en avoir fait la demande auprès du Préfet", "Oui, sauf si le refus est justifié par les", "conditions fixées par la Loi"],
-    correctText: "Oui, sauf si le refus est justifié par les",
+    options: ["Non, car les enregistrements doivent restent toujours confidentiels", "Non, car seuls les opérateurs publics peuvent visionner des images privées", "Oui, après en avoir fait la demande auprès du Préfet", "Oui, sauf si le refus est justifié par les conditions fixées par la Loi", "Oui, sans possibilité de refus"],
+    correctText: "Oui, sauf si le refus est justifié par les conditions fixées par la Loi",
     tip: "En vidéosurveillance/vidéoprotection, l'agent respecte les finalités du système, la protection des données et les consignes d'exploitation."
   },
   {

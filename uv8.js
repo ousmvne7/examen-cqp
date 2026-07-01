@@ -320,8 +320,8 @@ const uv8Questions = [
   },
   {
     question: "Les convoyeurs de fonds dans le cadre de leurs missions peuvent être dispensés du port de la tenue lorsqu'ils sont en véhicule banalisé :",
-    options: ["Non, car même une tenue banalisée est considérée comme une tenue", "Ouil", "Non car un agent de sécurité doit toujours être en tenue, c'est la règle", "Aucune des autres réponses", "Oui avec une carte professionnelle mentionnant le véhicule banalisé"],
-    correctText: "Ouil"
+    options: ["Non, car même une tenue banalisée est considérée comme une tenue", "Oui", "Non car un agent de sécurité doit toujours être en tenue, c'est la règle", "Aucune des autres réponses", "Oui avec une carte professionnelle mentionnant le véhicule banalisé"],
+    correctText: "Oui"
   },
   {
     question: "Indiquez ce que l'on doit inscrire sur la main courante ?",

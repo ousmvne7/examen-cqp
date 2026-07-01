@@ -126,6 +126,7 @@ const exams = {
 
 const EXAM_MODE_KEY = "exam";
 const EXAM_SECONDS_PER_QUESTION = 45;
+const PROGRESS_STORAGE_KEY = "cqpApsProgressV1";
 const officialExamModules = [
   { uvKey: "uv2", quota: 15 },
   { uvKey: "uv3", quota: 10 },
@@ -165,6 +166,10 @@ function isExamMode() {
 
 function isMiniExamMode() {
   return state.sessionMode === "mini-exam";
+}
+
+function isReviewMode() {
+  return state.sessionMode === "review-mistakes";
 }
 
 function allocateExamQuestions() {
@@ -235,6 +240,7 @@ let quizData = exams[activeUv].questions;
 const state = {
   sessionMode: "revision",
   revisionQuestions: new Map(),
+  resultSaved: false,
   current: 0,
   answers: new Map(),
   score: 0,
@@ -250,6 +256,7 @@ const els = {
   brandMark: $("brandMark"),
   quizSection: $("quizSection"),
   resultSection: $("resultSection"),
+  resultTitle: $("resultTitle"),
   questionText: $("questionText"),
   questionUvLabel: $("questionUvLabel"),
   questionTimer: $("questionTimer"),
@@ -262,6 +269,7 @@ const els = {
   currentTop: $("currentTop"),
   totalTop: $("totalTop"),
   counterCurrent: $("counterCurrent"),
+  counterSep: $("counterSep"),
   counterTotal: $("counterTotal"),
   examTitle: $("examTitle"),
   sidebarTotals: {
@@ -295,8 +303,15 @@ const els = {
   finalScore: $("finalScore"),
   resultBreakdown: $("resultBreakdown"),
   restart: $("restartBtn"),
-  miniExam: $("miniExamBtn")
+  miniExam: $("miniExamBtn"),
+  reviewMistakes: $("reviewMistakesBtn"),
+  mistakesRemainingBadge: $("mistakesRemainingBadge"),
+  progressSummary: $("progressSummary"),
+  weakUvList: $("weakUvList"),
+  historyList: $("historyList")
 };
+
+let progressData = loadProgress();
 
 Object.entries(exams).forEach(([uvKey, exam]) => {
   if (els.sidebarTotals[uvKey]) {
@@ -326,6 +341,141 @@ if (document.readyState === "complete") {
 
 function normalize(text) {
   return text.trim().replace(/\s+/g, " ");
+}
+
+function setExamHeading(title, badgeText = "") {
+  if (!els.examTitle) return;
+  els.examTitle.replaceChildren(document.createTextNode(title));
+  if (!badgeText) return;
+
+  const badge = document.createElement("span");
+  badge.className = "exam-title-badge";
+  badge.textContent = badgeText;
+  els.examTitle.append(" ", badge);
+}
+
+function loadProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY) || "{}");
+    return {
+      history: Array.isArray(saved.history) ? saved.history : [],
+      mistakes: saved.mistakes && typeof saved.mistakes === "object" ? saved.mistakes : {},
+      favorites: saved.favorites && typeof saved.favorites === "object" ? saved.favorites : {}
+    };
+  } catch {
+    return { history: [], mistakes: {}, favorites: {} };
+  }
+}
+
+function saveProgress() {
+  localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(progressData));
+}
+
+function uvKeyFromQuestion(question) {
+  return String(question?.sourceUv || activeUv || "")
+    .toLowerCase()
+    .replace(/^uv0/, "uv");
+}
+
+function uvLabelFromKey(uvKey) {
+  return uvKey === EXAM_MODE_KEY ? "Examen" : (exams[uvKey]?.title || uvKey.toUpperCase()).replace(" - ", " ");
+}
+
+function serializeQuestion(question) {
+  return {
+    question: question.question,
+    options: [...question.options],
+    correctText: question.correctText,
+    tip: question.tip || "",
+    sourceUv: uvKeyFromQuestion(question).toUpperCase()
+  };
+}
+
+function currentQuestionKey(question = quizData[state.current]) {
+  return question ? questionKey(question) : "";
+}
+
+function saveMistake(question) {
+  if (!question) return;
+  const key = currentQuestionKey(question);
+  const previous = progressData.mistakes[key] || {};
+  progressData.mistakes[key] = {
+    ...serializeQuestion(question),
+    misses: (previous.misses || 0) + 1,
+    lastMissedAt: Date.now()
+  };
+  saveProgress();
+  renderProgressDashboard();
+}
+
+function removeMistake(question) {
+  const key = currentQuestionKey(question);
+  if (progressData.mistakes[key]) {
+    delete progressData.mistakes[key];
+    saveProgress();
+    renderProgressDashboard();
+  }
+}
+
+function getSessionLabel() {
+  if (activeUv === EXAM_MODE_KEY) return "Examen 99";
+  if (state.sessionMode === "mini-exam") return `Mini ${activeUv.toUpperCase()}`;
+  if (state.sessionMode === "review-mistakes") return "Erreurs";
+  return `Révision ${activeUv.toUpperCase()}`;
+}
+
+function recordSessionResult(percent, byUv) {
+  if (state.resultSaved) return;
+  state.resultSaved = true;
+
+  progressData.history.unshift({
+    date: Date.now(),
+    label: getSessionLabel(),
+    mode: state.sessionMode,
+    score: state.score,
+    total: quizData.length,
+    percent,
+    byUv
+  });
+  progressData.history = progressData.history.slice(0, 30);
+  saveProgress();
+  renderProgressDashboard();
+}
+
+function renderProgressDashboard() {
+  if (!els.progressSummary || !els.weakUvList || !els.historyList) return;
+
+  const last = progressData.history[0];
+  els.progressSummary.textContent = last
+    ? `${last.percent}% dernier score`
+    : "Aucune session";
+
+  const uvStats = {};
+  progressData.history.slice(0, 20).forEach(session => {
+    Object.entries(session.byUv || {}).forEach(([uv, result]) => {
+      const uvKey = uv.toLowerCase().replace(/^uv0/, "uv");
+      uvStats[uvKey] ||= { score: 0, total: 0 };
+      uvStats[uvKey].score += result.score;
+      uvStats[uvKey].total += result.total;
+    });
+  });
+
+  const weakUvs = Object.entries(uvStats)
+    .map(([uvKey, result]) => ({
+      uvKey,
+      percent: result.total ? Math.round(result.score / result.total * 100) : 0
+    }))
+    .filter(item => item.percent < 80)
+    .sort((a, b) => a.percent - b.percent)
+    .slice(0, 4);
+
+  els.weakUvList.innerHTML = weakUvs.length
+    ? weakUvs.map(item => `<span class="danger">${item.uvKey.toUpperCase()} ${item.percent}%</span>`).join("")
+    : "<span>Rien d'inquiétant</span>";
+
+  els.historyList.innerHTML = progressData.history.length
+    ? progressData.history.slice(0, 4).map(item => `<span>${item.label} ${item.percent}%</span>`).join("")
+    : "<span>Pas encore d'historique</span>";
 }
 
 function formatTime(totalSeconds) {
@@ -398,6 +548,15 @@ function renderQcuCorrection(question, savedAnswer) {
   els.qcuNote.textContent = `NOTE : ${isCorrect ? 1 : 0} point`;
 }
 
+function buildRevisionTip(question) {
+  const tip = String(question.tip || "").trim();
+  if (tip) return tip.length > 170 ? `${tip.slice(0, 167).trim()}...` : tip;
+
+  const correctText = String(question.correctText || "").trim();
+  if (!correctText) return "Relis la règle associée : c'est une question piège.";
+  return `Retenir la formule exacte : ${correctText}.`;
+}
+
 function renderQuestion() {
   const question = quizData[state.current];
   if (!question) return showResults();
@@ -420,8 +579,23 @@ function renderQuestion() {
   if (els.miniExam) {
     const isAvailableUv = activeUv !== EXAM_MODE_KEY && Boolean(exams[activeUv]?.questions.length);
     const miniCount = Math.min(miniExamQuotas[activeUv] || 0, exams[activeUv]?.questions.length || 0);
-    els.miniExam.hidden = !isAvailableUv;
-    if (els.miniExam.parentElement) els.miniExam.parentElement.hidden = !isAvailableUv;
+    const mistakeCount = Object.values(progressData.mistakes)
+      .filter(item => String(item.sourceUv || "").toLowerCase() === activeUv).length;
+
+    els.miniExam.hidden = !isAvailableUv || isReviewMode();
+    if (els.reviewMistakes) {
+      els.reviewMistakes.hidden = !isAvailableUv || (!isReviewMode() && mistakeCount === 0);
+      els.reviewMistakes.classList.toggle("return-mode", isReviewMode());
+      els.reviewMistakes.textContent = isReviewMode() ? "Retour révision complète" : `Revoir mes erreurs (${mistakeCount})`;
+    }
+    if (els.mistakesRemainingBadge) {
+      els.mistakesRemainingBadge.hidden = !isReviewMode();
+    }
+    if (els.miniExam.parentElement) {
+      const hasTool = [els.miniExam, els.reviewMistakes, els.mistakesRemainingBadge]
+        .some(button => button && !button.hidden);
+      els.miniExam.parentElement.hidden = !hasTool;
+    }
     els.miniExam.disabled = isAvailableUv && miniCount === 0;
     els.miniExam.textContent = isMiniExamMode()
       ? "Retour révision complète"
@@ -438,17 +612,38 @@ function renderQuestion() {
   }
 
   els.questionText.textContent = question.question.replace("guaranteed", "garanti");
-  els.currentTop.textContent = number;
-  els.counterCurrent.textContent = number;
-  els.totalTop.textContent = total;
-  els.counterTotal.textContent = total;
+  if (isReviewMode()) {
+    const resolved = hasAnswered && normalize(savedAnswer) === normalize(question.correctText);
+    const remaining = Math.max(total - (resolved ? 1 : 0), 0);
+    if (els.mistakesRemainingBadge) {
+      els.mistakesRemainingBadge.textContent = `${remaining} ${remaining > 1 ? "restantes" : "restante"}`;
+    }
+    els.currentTop.parentElement.hidden = true;
+    els.counterCurrent.parentElement.hidden = true;
+    els.progress.parentElement.hidden = true;
+    if (els.counterSep) els.counterSep.hidden = true;
+  } else {
+    if (els.mistakesRemainingBadge) els.mistakesRemainingBadge.hidden = true;
+    els.currentTop.parentElement.hidden = false;
+    els.counterCurrent.parentElement.hidden = false;
+    els.progress.parentElement.hidden = false;
+    els.currentTop.parentElement.firstChild.textContent = "Question ";
+    els.currentTop.textContent = number;
+    els.totalTop.textContent = total;
+    els.counterCurrent.textContent = number;
+    if (els.counterSep) els.counterSep.hidden = false;
+    els.counterTotal.textContent = total;
+  }
   els.progress.style.width = `${Math.max(number / total * 100, 1.3)}%`;
-  els.feedbackBox.hidden = true;
-  els.feedbackText.textContent = "";
+  const shouldShowRevisionTip = !examMode && isWrongAnswer;
+  els.feedbackBox.hidden = !shouldShowRevisionTip;
+  els.feedbackText.textContent = shouldShowRevisionTip ? buildRevisionTip(question) : "";
   els.prev.disabled = examMode || state.current === 0;
   els.pagePrev.disabled = examMode || state.current === 0;
-  els.next.disabled = examMode && !state.examFeedback.has(state.current);
-  els.next.querySelector("span").textContent = number === total ? "Terminer l'examen" : "Question suivante";
+  els.next.disabled = (examMode && !state.examFeedback.has(state.current)) || (isReviewMode() && !hasAnswered);
+  els.next.querySelector("span").textContent = isReviewMode()
+    ? "Erreur suivante"
+    : number === total ? "Terminer l'examen" : "Question suivante";
 
   els.options.replaceChildren();
 
@@ -505,7 +700,17 @@ function answerQuestion(option, scrollPosition = window.scrollY) {
 
   const question = quizData[state.current];
   state.answers.set(state.current, option);
-  if (normalize(option) === normalize(question.correctText)) state.score += 1;
+  const isCorrect = normalize(option) === normalize(question.correctText);
+  if (isCorrect) {
+    state.score += 1;
+    if (state.sessionMode === "review-mistakes") {
+      renderQuestion();
+      restoreScrollPosition(scrollPosition);
+      return;
+    }
+  } else {
+    saveMistake(question);
+  }
 
   if (isExamMode()) {
     const finishedAt = Date.now();
@@ -562,7 +767,9 @@ function advanceExamQuestion() {
 function expireCurrentQuestion() {
   if (!isExamMode() || els.quizSection.hidden) return;
   if (!state.answers.has(state.current)) {
+    const question = quizData[state.current];
     state.answers.set(state.current, null);
+    saveMistake(question);
     const finishedAt = Date.now();
     state.examFeedback.set(state.current, {
       startedAt: state.questionStartedAt,
@@ -614,21 +821,25 @@ function showResults() {
   document.body.classList.toggle("exam-mode", false);
   document.querySelector(".pagination-panel").hidden = true;
   els.resultSection.hidden = false;
+  if (els.resultTitle) els.resultTitle.textContent = "Session terminée";
+  els.restart.textContent = "Recommencer";
   const percent = quizData.length ? Math.round(state.score / quizData.length * 100) : 0;
   els.finalScore.textContent = `${state.score} / ${quizData.length} — ${percent}% de réussite`;
 
-  if (isExamMode() && els.resultBreakdown) {
-    const byUv = quizData.reduce((acc, question, index) => {
-      const uv = question.sourceUv || "UV";
-      const answer = state.answers.get(index);
-      acc[uv] ||= { total: 0, score: 0 };
-      acc[uv].total += 1;
-      if (answer && normalize(answer) === normalize(question.correctText)) {
-        acc[uv].score += 1;
-      }
-      return acc;
-    }, {});
+  const byUv = quizData.reduce((acc, question, index) => {
+    const uv = question.sourceUv || activeUv.toUpperCase();
+    const answer = state.answers.get(index);
+    acc[uv] ||= { total: 0, score: 0 };
+    acc[uv].total += 1;
+    if (answer && normalize(answer) === normalize(question.correctText)) {
+      acc[uv].score += 1;
+    }
+    return acc;
+  }, {});
 
+  recordSessionResult(percent, byUv);
+
+  if (isExamMode() && els.resultBreakdown) {
     els.resultBreakdown.innerHTML = Object.entries(byUv)
       .sort(([a], [b]) => a.localeCompare(b, "fr", { numeric: true }))
       .map(([uv, result]) => `<span>${uv} : ${result.score}/${result.total}</span>`)
@@ -638,12 +849,62 @@ function showResults() {
   }
 }
 
+function showNoMistakesLeft() {
+  state.sessionMode = "revision";
+  quizData = exams[activeUv].questions;
+  setExamHeading(exams[activeUv].title);
+  state.current = 0;
+  state.answers.clear();
+  state.examFeedback.clear();
+  state.resultSaved = false;
+  resetTimer();
+  document.body.classList.toggle("exam-mode", false);
+  els.quizSection.hidden = true;
+  document.querySelector(".pagination-panel").hidden = true;
+  els.resultSection.hidden = false;
+  if (els.resultTitle) els.resultTitle.textContent = "Plus aucune erreur 🎯";
+  els.finalScore.textContent = "Bien joué, tu as nettoyé toutes tes erreurs sur cette UV.";
+  if (els.resultBreakdown) els.resultBreakdown.replaceChildren();
+  els.restart.textContent = "Retour à la révision";
+}
+
+function advanceReviewMistake() {
+  if (!isReviewMode()) return;
+
+  const question = quizData[state.current];
+  const answer = state.answers.get(state.current);
+  const resolved = answer && normalize(answer) === normalize(question.correctText);
+
+  if (resolved) {
+    removeMistake(question);
+    quizData.splice(state.current, 1);
+    state.answers.clear();
+    state.examFeedback.clear();
+    if (!quizData.length) {
+      showNoMistakesLeft();
+      return;
+    }
+    if (state.current >= quizData.length) state.current = quizData.length - 1;
+    renderQuestion();
+    requestAnimationFrame(() => scrollToCurrentQuestion());
+    return;
+  }
+
+  if (state.current >= quizData.length - 1) {
+    showResults();
+    return;
+  }
+  goTo(state.current + 1);
+}
+
 function restartQuiz() {
   if (activeUv === EXAM_MODE_KEY) {
     exams[EXAM_MODE_KEY].questions = buildExamSimulation();
     quizData = exams[EXAM_MODE_KEY].questions;
   } else if (isMiniExamMode()) {
     quizData = buildMiniExamSimulation(activeUv);
+  } else if (state.sessionMode === "review-mistakes") {
+    quizData = buildStoredQuestionSet(progressData.mistakes, activeUv);
   } else {
     exams[activeUv].questions = shuffleQuestions(exams[activeUv].questions);
     quizData = exams[activeUv].questions;
@@ -651,6 +912,7 @@ function restartQuiz() {
   state.current = 0;
   state.answers.clear();
   state.examFeedback.clear();
+  state.resultSaved = false;
   state.score = 0;
   resetTimer();
   els.quizSection.hidden = false;
@@ -661,7 +923,7 @@ function restartQuiz() {
 }
 
 function switchExam(uvKey) {
-  if (!exams[uvKey] || uvKey === activeUv) return;
+  if (!exams[uvKey] || (uvKey === activeUv && !isReviewMode())) return;
 
   activeUv = uvKey;
   state.sessionMode = uvKey === EXAM_MODE_KEY ? "full-exam" : "revision";
@@ -672,10 +934,11 @@ function switchExam(uvKey) {
   state.current = 0;
   state.answers.clear();
   state.examFeedback.clear();
+  state.resultSaved = false;
   state.score = 0;
   resetTimer();
 
-  els.examTitle.textContent = exams[activeUv].title;
+  setExamHeading(exams[activeUv].title);
   els.quizSection.hidden = false;
   document.querySelector(".pagination-panel").hidden = false;
   els.resultSection.hidden = true;
@@ -693,6 +956,7 @@ function resetCurrentSession() {
   state.current = 0;
   state.answers.clear();
   state.examFeedback.clear();
+  state.resultSaved = false;
   state.score = 0;
   resetTimer();
   els.quizSection.hidden = false;
@@ -708,7 +972,7 @@ function toggleMiniExam() {
   if (isMiniExamMode()) {
     state.sessionMode = "revision";
     quizData = exams[activeUv].questions;
-    els.examTitle.textContent = exams[activeUv].title;
+    setExamHeading(exams[activeUv].title);
     resetCurrentSession();
     return;
   }
@@ -718,7 +982,40 @@ function toggleMiniExam() {
 
   state.sessionMode = "mini-exam";
   quizData = miniQuestions;
-  els.examTitle.textContent = `${exams[activeUv].title} - MINI EXAMEN`;
+  setExamHeading(`${exams[activeUv].title} - MINI EXAMEN`);
+  resetCurrentSession();
+}
+
+function buildStoredQuestionSet(collection, uvKey) {
+  return Object.values(collection)
+    .filter(item => String(item.sourceUv || "").toLowerCase() === uvKey)
+    .sort((a, b) => (b.lastMissedAt || b.savedAt || 0) - (a.lastMissedAt || a.savedAt || 0))
+    .map(item => ({
+      question: item.question,
+      options: [...item.options],
+      correctText: item.correctText,
+      tip: item.tip || "",
+      sourceUv: uvKey.toUpperCase()
+    }));
+}
+
+function startStoredQuestionMode(mode) {
+  if (activeUv === EXAM_MODE_KEY) return;
+
+  if (isReviewMode()) {
+    state.sessionMode = "revision";
+    quizData = exams[activeUv].questions;
+    setExamHeading(exams[activeUv].title);
+    resetCurrentSession();
+    return;
+  }
+
+  const questions = buildStoredQuestionSet(progressData.mistakes, activeUv);
+  if (!questions.length) return;
+
+  state.sessionMode = "review-mistakes";
+  quizData = questions;
+  setExamHeading(exams[activeUv].title, "Carnet d’erreurs");
   resetCurrentSession();
 }
 
@@ -732,11 +1029,17 @@ els.next.addEventListener("click", () => {
     return;
   }
 
+  if (isReviewMode()) {
+    advanceReviewMistake();
+    return;
+  }
+
   if (state.current === quizData.length - 1) showResults();
   else goTo(state.current + 1);
 });
 els.restart.addEventListener("click", restartQuiz);
 if (els.miniExam) els.miniExam.addEventListener("click", toggleMiniExam);
+if (els.reviewMistakes) els.reviewMistakes.addEventListener("click", () => startStoredQuestionMode("review-mistakes"));
 els.uvCards.forEach(card => {
   card.addEventListener("click", () => switchExam(card.dataset.uv));
 });
@@ -771,6 +1074,7 @@ setInterval(() => {
 }, 1000);
 
 els.timer.textContent = formatTime(state.elapsedSeconds);
+renderProgressDashboard();
 renderQuestion();
 }
 

@@ -74,8 +74,8 @@ const uv6Questions = [
   {
     question: "Quelles sont les conditions de rétention d'une personne dans le cadre de l'article 73 du Code de procédure pénale?",
     options: ["Si l'état de la personne appréhendée nécessite des soins, l'agent doit immédiatement faire appel aux forces de l'ordre", "Si l'état de la personne appréhendée nécessite des soins, l'agent doit immédiatement faire appel aux services médicaux compétents.", "Si l'état de la personne appréhendée nécessite des soins, l'agent doit rien faire jusqu'à l'arrivée des forces de l'ordre", "Aucune des autres réponses", "Si l'état de la personne appréhendée nécessite des soins, l'agent doit immédiatement avertir son avocat"],
-    correctText: "Si l'état de la personne appréhendée nécessite des soins, l'agent doit immédiatement faire appel aux forces de l'ordre",
-    tip: "L'article 73 du CPP encadre strictement l'appréhension en flagrant délit et impose une remise sans délai aux forces de l'ordre."
+    correctText: "Si l'état de la personne appréhendée nécessite des soins, l'agent doit immédiatement faire appel aux services médicaux compétents.",
+    tip: "Si la personne appréhendée nécessite des soins, priorité aux services médicaux compétents. Les forces de l'ordre restent à aviser sans délai pour la remise."
   },
   {
     question: "Pouvez-vous appréhender un individu en surface de vente?",
@@ -144,13 +144,13 @@ const uv6Questions = [
   },
   {
     question: "Un agent de sécurité privée masculin doit appréhender un voleur en sortie de caisse, mais il s'agit d'une femme :",
-    options: ["Il doit appeler une collègue du même sexe", "Il doit demander l'autorisation de la personne", "Il ne peut rien faire sur une personne de sexe opposé", "I agit normalement, néanmoins il est conseillé d'appeler un témoin féminin", "Aucune des autres réponses"],
-    correctText: "I agit normalement, néanmoins il est conseillé d'appeler un témoin féminin"
+    options: ["Il doit appeler une collègue du même sexe", "Il doit demander l'autorisation de la personne", "Il ne peut rien faire sur une personne de sexe opposé", "Il agit normalement, néanmoins il est conseillé d'appeler un témoin féminin", "Aucune des autres réponses"],
+    correctText: "Il agit normalement, néanmoins il est conseillé d'appeler un témoin féminin"
   },
   {
     question: "Lorsque l'agent pré-vol remarque qu'une personne a dissimilé un objet prélevé dans un rayon :",
-    options: ["Il le signale immédiatement au directeur du magasin.", "[Il le signale à l'agent arrière-caisse et suit la personne discrètement jusqu'à son passage en caissel", "Il le signale seulement à l'agent arrière-caisse.", "Aucune des autres réponses", "Il le signale à l'agent arrière-caisse et continue la surveillance de la zone de vente pour tenter de constater de nouveaux délits."],
-    correctText: "[Il le signale à l'agent arrière-caisse et suit la personne discrètement jusqu'à son passage en caissel"
+    options: ["Il le signale immédiatement au directeur du magasin.", "Il suit la personne discrètement jusqu'à son passage en caisse et le signale à l'agent arrière-caisse.", "Il le signale seulement à l'agent arrière-caisse.", "Aucune des autres réponses", "Il le signale à l'agent arrière-caisse et continue la surveillance de la zone de vente pour tenter de constater de nouveaux délits."],
+    correctText: "Il suit la personne discrètement jusqu'à son passage en caisse et le signale à l'agent arrière-caisse."
   },
   {
     question: "Je suis agent de sécurité privée dans un établissement, sous quelles conditions ai-je le droit d'appréhender une personne ?",

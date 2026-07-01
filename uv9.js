@@ -163,7 +163,7 @@ const uv9Questions = [
   {
     question: "Quel est le seuil fixé par le Code de la Sécurité Intérieure, concernant l'obligation de palpation de sécurité des manifestations ?",
     options: ["Aucune des autres réponses", "Pour l'accès aux enceintes dans lesquelles sont organisées des manifestations rassemblant plus de 1500 spectateurs", "Pour l'accès aux enceintes dans lesquelles est organisée une manifestation, rassemblant moins de 300 spectateurs", "Pour l'accès aux enceintes dans lesquelles est organisée une manifestation rassemblant de 150 à 200 spectateurs", "Pour l'accès aux enceintes dans lesquelles sont organisées des manifestations rassemblant plus de"],
-    correctText: "Pour l'accès aux enceintes dans lesquelles sont organisées des manifestations rassemblant plus de"
+    correctText: "Aucune des autres réponses"
   },
   {
     question: "Les membres du service d'ordre de l'organisateur chargés d'une mission relative aux palpations de sécurité doivent :",
@@ -172,13 +172,13 @@ const uv9Questions = [
   },
   {
     question: "D'après le Code de la Sécurité Intérieure, quelles conditions devez-vous respecter pour effectuer une palpation de sécurité lorsqu'un périmètre de protection a été institué ?",
-    options: ["Détenir l'agrément du préfet, l'habilitation de l'employeur et effectuer la palpation sur n'importe quelle personne", "Aucune des autres réponses", "Détenir l'agrément du préfet et l'habilitation de l'employeur", "Détenir l'agrément du préfet et effectuer la palpation sur une personne de même sexe avec son accord", "Etre désigné par son employeur pour effectuer la palpation sur une personne de même sexe avec son"],
-    correctText: "Etre désigné par son employeur pour effectuer la palpation sur une personne de même sexe avec son"
+    options: ["Détenir l'agrément du préfet, l'habilitation de l'employeur et effectuer la palpation sur n'importe quelle personne", "Aucune des autres réponses", "Détenir l'agrément du préfet et l'habilitation de l'employeur", "Détenir l'agrément du préfet et effectuer la palpation sur une personne de même sexe avec son accord", "Être désigné par son employeur pour effectuer la palpation sur une personne de même sexe avec son accord"],
+    correctText: "Être désigné par son employeur pour effectuer la palpation sur une personne de même sexe avec son accord"
   },
   {
     question: "D'après le Code de la Sécurité Intérieure, quelles conditions devez-vous respecter pour effectuer une palpation de sécurité lorsqu'un périmètre de protection a été institué ?",
-    options: ["Détenir l'agrément du préfet et l'habilitation de l'employeur", "Détenir l'agrément du préfet, l'habilitation de l'employeur et effectuer la palpation sur n'importe quelle personne", "Aucune des autres réponses", "Détenir l'agrément du préfet et effectuer la palpation sur une personne de même sexe avec son accord", "Etre désigné par son employeur pour effectuer la palpation sur une personne de même sexe avec son accord et sous la responsabilité d'un"],
-    correctText: "Etre désigné par son employeur pour effectuer la palpation sur une personne de même sexe avec son accord et sous la responsabilité d'un"
+    options: ["Détenir l'agrément du préfet et l'habilitation de l'employeur", "Détenir l'agrément du préfet, l'habilitation de l'employeur et effectuer la palpation sur n'importe quelle personne", "Aucune des autres réponses", "Détenir l'agrément du préfet et effectuer la palpation sur une personne de même sexe avec son accord", "Être désigné par son employeur pour effectuer la palpation sur une personne de même sexe avec son accord et sous la responsabilité d'un OPJ"],
+    correctText: "Être désigné par son employeur pour effectuer la palpation sur une personne de même sexe avec son accord et sous la responsabilité d'un OPJ"
   },
   {
     question: "En cas d'événement récréatif rassemblant plus de 300 personnes, l'agrément de palpation est délivré par :",
@@ -187,8 +187,8 @@ const uv9Questions = [
   },
   {
     question: "Les consignes vous demandent d'effectuer des palpations lors d'une manifestation artistique réunissant plus de 20.000 personnes, que faites-vous ?",
-    options: ["Vous lui demandez s'il dispose d'une autorisation du CNAPS en cas de circonstances exceptionnelles", "Vous lui demandez s'il a une autorisation préfectorale", "Aucune des autres reponses", "ous acceptez car votre employeur a engagé sa responsabilité et que ces palpations s'effectuent sous le contrôle d'un OPJ", "Vous rappelez que vous n'avez pas d'agrément du CNAPS et que vous n'avez pas le droit de le faire"],
-    correctText: "ous acceptez car votre employeur a engagé sa responsabilité et que ces palpations s'effectuent sous le contrôle d'un OPJ"
+    options: ["Vous lui demandez s'il dispose d'une autorisation du CNAPS en cas de circonstances exceptionnelles", "Vous lui demandez s'il a une autorisation préfectorale", "Aucune des autres reponses", "Vous acceptez car votre employeur a engagé sa responsabilité et que ces palpations s'effectuent sous le contrôle d'un OPJ", "Vous rappelez que vous n'avez pas d'agrément du CNAPS et que vous n'avez pas le droit de le faire"],
+    correctText: "Vous acceptez car votre employeur a engagé sa responsabilité et que ces palpations s'effectuent sous le contrôle d'un OPJ"
   },
   {
     question: "Pour procéder à des palpations de sécurité dans les enceintes de manifestations sportives, les employés des entreprises de surveillance et de gardiennage doivent :",

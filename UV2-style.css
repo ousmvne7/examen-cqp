@@ -93,6 +93,67 @@ svg { display: block; }
 .home-link svg { width: 23px; fill: currentColor; }
 .nav-label { margin: 25px 13px 11px; color: #747c8b; font-size: 13px; font-weight: 700; letter-spacing: .45px; }
 
+.progress-card {
+  margin: 0 0 14px;
+  padding: 13px;
+  border: 1px solid #dfe7f3;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fbff, #ffffff);
+  box-shadow: 0 3px 10px rgba(13, 43, 98, .045);
+}
+
+.progress-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.progress-card-head span {
+  color: #123d92;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.progress-card-head small {
+  color: #697386;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.progress-block + .progress-block { margin-top: 10px; }
+.progress-block strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #0d2758;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.progress-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.progress-list span {
+  padding: 5px 7px;
+  border: 1px solid #dce5f3;
+  border-radius: 999px;
+  color: #17448e;
+  background: #fff;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.progress-list span.danger {
+  border-color: #ffd2d7;
+  color: #a52d37;
+  background: #fff5f5;
+}
+
 .uv-card {
   border: 1px solid #dfe4ec;
   width: 100%;
@@ -161,6 +222,27 @@ svg { display: block; }
 
 .exam-heading { display: flex; align-items: center; gap: 14px; color: #164495; font-size: 23px; font-weight: 700; letter-spacing: -.4px; }
 .exam-heading svg { width: 25px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.exam-heading #examTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.exam-title-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 12px;
+  border: 1px solid #f1b8bd;
+  border-radius: 999px;
+  background: #fff4f5;
+  color: #b42332;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
 .header-actions { display: flex; align-items: center; gap: 39px; }
 .timer { display: flex; align-items: center; gap: 10px; color: #e13d41; font-size: 19px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .timer svg { width: 27px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -199,6 +281,11 @@ svg { display: block; }
 .quiz-topline { display: flex; align-items: center; justify-content: space-between; }
 .progress-copy { color: #16499c; font-size: 16px; font-weight: 700; }
 .counter { min-width: 96px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; gap: 5px; color: #fff; background: linear-gradient(135deg, #153e84, #0e2e70); font-size: 17px; font-weight: 700; white-space: nowrap; }
+.progress-copy[hidden],
+.counter[hidden],
+.progress-track[hidden] {
+  display: none;
+}
 
 .progress-track { height: 9px; margin: -10px 120px 0 0; border-radius: 999px; background: #e4e7ed; overflow: hidden; }
 .progress-bar { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #1d5bc3, #1750b0); transition: width .25s ease; }
@@ -206,10 +293,12 @@ svg { display: block; }
 .session-tools {
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-top: 12px;
 }
 
-.session-tools:has(.mini-exam-btn[hidden]) {
+.session-tools[hidden] {
   display: none;
 }
 
@@ -226,12 +315,63 @@ svg { display: block; }
   box-shadow: 0 2px 8px rgba(12, 34, 76, .05);
 }
 
+.mini-exam-btn.subtle {
+  background: #ffffff;
+  color: #17366f;
+}
+
+.mini-exam-btn.mistakes-btn {
+  border-color: #f1b8bd;
+  background: #fff4f5;
+  color: #b42332;
+}
+
+.mini-exam-btn.mistakes-btn:hover {
+  border-color: #de6f7a;
+  background: #ffe8ea;
+}
+
+.mini-exam-btn.mistakes-btn.return-mode {
+  border-color: #bfd0f2;
+  background: #eef5ff;
+  color: #164495;
+}
+
 .mini-exam-btn:hover {
   border-color: #bfd0f2;
   background: #eef5ff;
 }
 
+.mini-exam-btn.mistakes-btn:hover {
+  border-color: #de6f7a;
+  background: #ffe8ea;
+}
+
+.mini-exam-btn.mistakes-btn.return-mode:hover {
+  border-color: #8fb0ea;
+  background: #e4efff;
+}
+
 .mini-exam-btn[hidden] {
+  display: none;
+}
+
+.mistakes-remaining-badge {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 13px;
+  border: 1px solid #f1b8bd;
+  border-radius: 999px;
+  background: #fff4f5;
+  color: #b42332;
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.mistakes-remaining-badge[hidden] {
   display: none;
 }
 
@@ -441,17 +581,16 @@ svg { display: block; }
 .feedback-box {
   margin-top: 14px;
   padding: 14px 18px;
-  border: 1px solid #f0b8bc;
-  border-left: 5px solid var(--danger);
+  border: 1px solid #cfe0ff;
+  border-left: 5px solid #1d5bc3;
   border-radius: 10px;
-  background: #fff7f7;
-  color: #79252c;
+  background: #f6f9ff;
+  color: #12315f;
 }
 
-.feedback-box,
 .feedback-box[hidden] { display: none; }
-.feedback-box strong { display: block; margin-bottom: 5px; font-size: 15px; }
-.feedback-box p { margin: 0; font-size: 14px; line-height: 1.45; }
+.feedback-box strong { display: block; margin-bottom: 5px; color: #164495; font-size: 15px; }
+.feedback-box p { margin: 0; font-size: 14px; line-height: 1.45; font-weight: 600; }
 
 .question-actions {
   min-height: 82px;

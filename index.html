@@ -158,12 +158,14 @@
         <section id="quizSection" class="quiz-panel">
           <div class="quiz-topline">
             <div class="progress-copy">Question <span id="currentTop">1</span> sur <span id="totalTop">75</span></div>
-            <div class="counter"><span id="counterCurrent">1</span><span>/</span><span id="counterTotal">75</span></div>
+            <div class="counter"><span id="counterCurrent">1</span><span id="counterSep">/</span><span id="counterTotal">75</span></div>
           </div>
 
           <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
           <div class="session-tools">
             <button id="miniExamBtn" class="mini-exam-btn" type="button">Lancer mini examen UV</button>
+            <button id="reviewMistakesBtn" class="mini-exam-btn mistakes-btn" type="button">Revoir mes erreurs</button>
+            <span id="mistakesRemainingBadge" class="mistakes-remaining-badge" hidden>0 restante</span>
           </div>
           <div class="question-module-row">
             <span id="questionUvLabel" class="question-uv-label">UV02 - JURIDIQUE</span>
@@ -180,7 +182,7 @@
           </div>
 
           <div id="feedbackBox" class="feedback-box" hidden>
-            <strong>Explication</strong>
+            <strong>À retenir</strong>
             <p id="feedbackText"></p>
           </div>
 
@@ -210,7 +212,7 @@
         </section>
 
         <section id="resultSection" class="result-screen" hidden>
-          <h2>Session terminée</h2>
+          <h2 id="resultTitle">Session terminée</h2>
           <p id="finalScore"></p>
           <div id="resultBreakdown" class="result-breakdown"></div>
           <button id="restartBtn" class="primary-btn" type="button">Recommencer</button>
