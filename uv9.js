@@ -49,8 +49,8 @@ const uv9Questions = [
   },
   {
     question: "Quel est le seuil fixé par le Code de la Sécurité Intérieure, concernant l'obligation de palpation de sécurité des manifestations?",
-    options: ["Aucune des autres réponses", "Pour l'accès aux enceintes dans lesquelles est organisée des manifestations rassemblant plus de 300 spectateurs", "Pour l'accès aux enceintes dans lesquelles est organisée une manifestation rassemblant de 150 à 200 spectateurs", "Pour l'accès aux enceintes dans lesquelles est organisée des manifestations rassemblant plus de 1500 spectateurs", "Pour l'accès aux enceintes dans lesquelles est organisée une manifestation, rassemblant moins de 300 spectateurs"],
-    correctText: "Aucune des autres réponses",
+    options: ["Aucune des autres réponses", "Pour l'accès aux enceintes dans lesquelles sont organisées des manifestations rassemblant plus de 300 spectateurs", "Pour l'accès aux enceintes dans lesquelles est organisée une manifestation rassemblant de 150 à 200 spectateurs", "Pour l'accès aux enceintes dans lesquelles sont organisées des manifestations rassemblant plus de 1500 spectateurs", "Pour l'accès aux enceintes dans lesquelles est organisée une manifestation, rassemblant moins de 300 spectateurs"],
+    correctText: "Pour l'accès aux enceintes dans lesquelles sont organisées des manifestations rassemblant plus de 300 spectateurs",
     tip: "La palpation de sécurité est encadrée: accord de la personne, même sexe, habilitation/agrément selon le contexte et respect des consignes."
   },
   {
@@ -162,8 +162,8 @@ const uv9Questions = [
   },
   {
     question: "Quel est le seuil fixé par le Code de la Sécurité Intérieure, concernant l'obligation de palpation de sécurité des manifestations ?",
-    options: ["Aucune des autres réponses", "Pour l'accès aux enceintes dans lesquelles sont organisées des manifestations rassemblant plus de 1500 spectateurs", "Pour l'accès aux enceintes dans lesquelles est organisée une manifestation, rassemblant moins de 300 spectateurs", "Pour l'accès aux enceintes dans lesquelles est organisée une manifestation rassemblant de 150 à 200 spectateurs", "Pour l'accès aux enceintes dans lesquelles sont organisées des manifestations rassemblant plus de"],
-    correctText: "Aucune des autres réponses"
+    options: ["Aucune des autres réponses", "Pour l'accès aux enceintes dans lesquelles sont organisées des manifestations rassemblant plus de 1500 spectateurs", "Pour l'accès aux enceintes dans lesquelles est organisée une manifestation, rassemblant moins de 300 spectateurs", "Pour l'accès aux enceintes dans lesquelles est organisée une manifestation rassemblant de 150 à 200 spectateurs", "Pour l'accès aux enceintes dans lesquelles sont organisées des manifestations rassemblant plus de 300 spectateurs"],
+    correctText: "Pour l'accès aux enceintes dans lesquelles sont organisées des manifestations rassemblant plus de 300 spectateurs"
   },
   {
     question: "Les membres du service d'ordre de l'organisateur chargés d'une mission relative aux palpations de sécurité doivent :",
